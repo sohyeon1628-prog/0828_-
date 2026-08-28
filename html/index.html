@@ -1,0 +1,2997 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>교보문고</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* =========================================================
+       1. 기본 리셋 및 전역 레이아웃
+       ========================================================= */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+      color: #242424;
+      background-color: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      width: 100%;
+      overflow-x: hidden;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    button {
+      background: none;
+      border: none;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* =========================================================
+       2. HEADER & GNB
+       ========================================================= */
+    header {
+      background-color: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .gnb-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+
+    .gnb-left {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
+
+    /* 교보문고 로고 영역 */
+    .brand-logo-slot {
+      display: flex;
+      align-items: center;
+      width: 120px;
+      height: 36px;
+      flex-shrink: 0;
+    }
+    .brand-logo-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .main-nav {
+      display: flex;
+      list-style: none;
+      gap: 26px;
+    }
+
+    .main-nav a {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333333;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.15s ease;
+    }
+
+    .main-nav a:hover,
+    .main-nav a.active {
+      color: #111111;
+      font-weight: 800;
+    }
+
+    .main-nav .badge-dot {
+      width: 4px;
+      height: 4px;
+      background-color: #e5a034;
+      border-radius: 50%;
+      display: inline-block;
+      margin-top: -8px;
+    }
+
+    .gnb-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .icon-btn {
+      color: #242424;
+      font-size: 18px;
+      padding: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.15s ease;
+    }
+    .icon-btn:hover {
+      color: #00873c;
+    }
+
+    .btn-auth-link {
+      font-size: 13px;
+      color: #666666;
+      font-weight: 500;
+    }
+    .btn-auth-link:hover {
+      color: #111111;
+    }
+
+    .btn-login {
+      background-color: #242424;
+      color: #ffffff !important;
+      padding: 7px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+    }
+    .btn-login:hover {
+      background-color: #111111;
+    }
+
+    /* 서브 탭 메뉴 & 우측 긴 타원형 검색창 */
+    .sub-nav-wrapper {
+      border-bottom: 1px solid #f0f0f0;
+      background-color: #ffffff;
+    }
+
+    .sub-nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 52px;
+      gap: 30px;
+    }
+
+    .sub-nav {
+      display: flex;
+      list-style: none;
+      gap: 24px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .sub-nav a {
+      font-size: 14.5px;
+      color: #767676;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .sub-nav a.active {
+      color: #111111;
+      font-weight: 800;
+    }
+
+    .sub-nav a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -17px;
+      left: 0;
+      width: 100%;
+      height: 2.5px;
+      background-color: #111111;
+    }
+
+    .search-bar-inline {
+      width: 480px;
+      max-width: 100%;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      border: 1.5px solid #002f6c;
+      border-radius: 24px;
+      padding: 0 16px 0 18px;
+      background-color: #ffffff;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .search-bar-inline:focus-within {
+      box-shadow: 0 2px 10px rgba(0, 47, 108, 0.12);
+    }
+
+    .search-bar-inline input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 13.5px;
+      color: #333333;
+      background: transparent;
+    }
+
+    .search-bar-inline input::placeholder {
+      color: #999999;
+    }
+
+    .search-bar-inline .search-btn {
+      color: #002f6c;
+      font-size: 15px;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* =========================================================
+       3. 메인 배너 슬라이더
+       ========================================================= */
+    .hero-slider-container {
+      position: relative;
+      width: 100%;
+      margin-top: 24px;
+    }
+
+    .hero-slider-wrap {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      width: 100%;
+      height: 380px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
+    }
+
+    .slider-track {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .slide-item {
+      min-width: 100%;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 100px 0 90px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .slide-theme-yellow {
+      background: linear-gradient(125deg, #e5b955 0%, #ebb94d 50%, #f4c767 100%);
+    }
+    .slide-theme-blue-main {
+      background: linear-gradient(125deg, #1b8ced 0%, #29a0f5 50%, #4cb3f9 100%);
+    }
+    .slide-theme-sky-main {
+      background: linear-gradient(125deg, #74b9f0 0%, #8ac7f5 50%, #a4d5f9 100%);
+    }
+    .slide-theme-blue-cat {
+      background: linear-gradient(125deg, #007cc7 0%, #008be0 50%, #159df5 100%);
+    }
+
+    .slide-text-box {
+      max-width: 620px;
+      z-index: 2;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .slide-title-main {
+      font-size: 42px;
+      font-weight: 900;
+      line-height: 1.25;
+      letter-spacing: -1.2px;
+      word-break: keep-all;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .slide-desc-sub {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.5;
+      opacity: 0.95;
+      letter-spacing: -0.3px;
+    }
+
+    .slide-visual-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      z-index: 2;
+      height: 100%;
+    }
+
+    .slide-single-cover {
+      width: 220px;
+      height: 315px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: -8px 16px 36px rgba(0, 0, 0, 0.22);
+      background-color: #ffffff;
+      flex-shrink: 0;
+    }
+    .slide-single-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .slide-double-covers {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .slide-double-covers .cover-card {
+      width: 175px;
+      height: 255px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: -6px 14px 28px rgba(0, 0, 0, 0.2);
+      background-color: #ffffff;
+      flex-shrink: 0;
+    }
+    .slide-double-covers .cover-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cat-visual-card {
+      width: 420px;
+      height: 330px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .cat-visual-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .slider-badge {
+      position: absolute;
+      bottom: 24px;
+      right: 32px;
+      background-color: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(6px);
+      color: #ffffff;
+      font-size: 12.5px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 10;
+    }
+    .slider-badge i {
+      cursor: pointer;
+      font-size: 11px;
+    }
+
+    .hero-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background-color: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #333333;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.2s ease;
+    }
+    .hero-nav-btn:hover {
+      background-color: #f8f9fa;
+      color: #000000;
+      transform: translateY(-50%) scale(1.08);
+    }
+    .hero-nav-btn.btn-prev { left: -20px; }
+    .hero-nav-btn.btn-next { right: -20px; }
+
+    /* =========================================================
+       4. 원형 키워드 퀵메뉴
+       ========================================================= */
+    .keyword-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 36px 0 48px;
+      width: 100%;
+    }
+    .keyword-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0;
+      width: 100%;
+      max-width: 1100px;
+    }
+    .keyword-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 4px 0;
+      transition: transform 0.2s ease;
+    }
+    .keyword-item:hover {
+      transform: translateY(-4px);
+    }
+    .circle-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background-color: #f6f7f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: #333333;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+    .circle-icon.dark {
+      background-color: #4a1818;
+      color: #ff8e8e;
+    }
+    .keyword-item span {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #444444;
+      white-space: nowrap;
+    }
+
+    /* =========================================================
+       5. 오늘의 인생책 스타일
+       ========================================================= */
+    .life-book-section {
+      width: 100%;
+      margin: 40px 0 60px;
+    }
+    .life-book-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .life-book-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .life-book-main-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #111111;
+      letter-spacing: -0.5px;
+    }
+    .life-book-sub-title {
+      font-size: 13.5px;
+      color: #767676;
+    }
+    .life-book-arrow {
+      font-size: 18px;
+      color: #444444;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+
+    .life-book-banner-card {
+      width: 100%;
+      background-color: #dbe7ef;
+      border-radius: 20px;
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .life-book-left-visual {
+      width: 300px;
+      height: 330px;
+      background: linear-gradient(135deg, #78a6b8 0%, #a4c8d5 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      flex-shrink: 0;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+    .life-book-cover-wrap {
+      width: 160px;
+      height: 236px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+      position: relative;
+      background-color: #f1f3f5;
+    }
+    .life-book-cover-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .life-book-plus-badge {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      background-color: rgba(0, 0, 0, 0.65);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+    }
+
+    .life-book-right-review {
+      flex: 1;
+      max-width: 580px;
+      background-color: #ffffff;
+      border-radius: 16px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    }
+    .reviewer-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .reviewer-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      overflow: hidden;
+      background-color: #f1f3f5;
+      flex-shrink: 0;
+    }
+    .reviewer-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .reviewer-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .reviewer-badge-txt {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #111111;
+    }
+    .reviewer-name {
+      font-size: 12px;
+      color: #888888;
+    }
+
+    .review-quote-box {
+      position: relative;
+      padding: 10px 14px;
+      margin-bottom: 20px;
+    }
+    .quote-mark {
+      color: #d1d5db;
+      font-size: 20px;
+      font-family: serif;
+      line-height: 1;
+    }
+    .quote-mark.open {
+      position: absolute;
+      top: -8px;
+      left: 0;
+    }
+    .quote-mark.close {
+      position: absolute;
+      bottom: -12px;
+      right: 0;
+    }
+    .review-body-text {
+      font-size: 14px;
+      color: #444444;
+      line-height: 1.6;
+      word-break: keep-all;
+    }
+
+    .review-footer-list {
+      border-top: 1px solid #f0f0f0;
+      padding-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .review-point-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #666666;
+    }
+    .review-point-item i {
+      color: #8b5cf6;
+      font-size: 11px;
+    }
+
+    /* =========================================================
+       6. 랭킹 베스트 스타일
+       ========================================================= */
+    .ranking-section {
+      width: 100%;
+      position: relative;
+      margin-bottom: 80px;
+    }
+
+    .ranking-main-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .title-tabs {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .title-tab-item {
+      font-size: 22px;
+      font-weight: 800;
+      color: #222222;
+      cursor: pointer;
+    }
+    .title-more-arrow {
+      font-size: 18px;
+      color: #444444;
+      cursor: pointer;
+    }
+
+    .category-filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+    .cat-btn {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #666666;
+      border: 1px solid #e8e8e8;
+      background-color: #ffffff;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .cat-btn:hover {
+      background-color: #f7f8f9;
+      color: #222222;
+    }
+    .cat-btn.active {
+      background-color: #242424;
+      color: #ffffff;
+      border-color: #242424;
+      font-weight: 700;
+    }
+
+    .sub-filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: #666666;
+      margin-bottom: 24px;
+    }
+    .date-dropdown {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+      color: #333333;
+      cursor: pointer;
+    }
+    .update-date {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #888888;
+    }
+
+    .ranking-slider-wrap {
+      position: relative;
+      width: 100%;
+    }
+    .ranking-overflow-box {
+      width: 100%;
+      overflow: hidden;
+    }
+    .ranking-slider-track {
+      display: flex;
+      width: 100%;
+      transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .ranking-slide-page {
+      min-width: 100%;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      column-gap: 20px;
+      row-gap: 32px;
+    }
+
+    @media (max-width: 1200px) {
+      .ranking-slide-page {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .ranking-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+      min-height: 114px;
+      overflow: hidden;
+    }
+
+    .rank-number {
+      font-size: 18px;
+      font-weight: 900;
+      color: #111111;
+      min-width: 26px;
+      text-align: center;
+      line-height: 1;
+      padding-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .rank-thumb-box {
+      width: 76px;
+      min-width: 76px;
+      height: 110px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      background-color: #f1f3f5;
+      flex-shrink: 0;
+    }
+    .rank-thumb-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .rank-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      min-width: 0;
+      height: 100%;
+      padding-top: 1px;
+    }
+
+    .rank-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #222222;
+      line-height: 1.35;
+      height: 36px;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: keep-all;
+      margin-bottom: 4px;
+    }
+
+    .rank-author {
+      font-size: 12px;
+      color: #777777;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      line-height: 1.3;
+      height: 16px;
+    }
+
+    .badge-tag {
+      display: inline-block;
+      align-self: flex-start;
+      margin-top: 6px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      background-color: #f3e8ff;
+      color: #7e22ce;
+    }
+
+    .ranking-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #ffffff;
+      border: 1px solid #e0e0e0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: #444444;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.2s ease;
+    }
+    .ranking-nav-btn:hover {
+      background-color: #f8f9fa;
+      color: #111111;
+      border-color: #bbbbbb;
+    }
+    .ranking-nav-btn.btn-prev { left: -20px; }
+    .ranking-nav-btn.btn-next { right: -20px; }
+
+    .ranking-pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-top: 30px;
+    }
+    .ranking-page-text {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #444444;
+    }
+    .ranking-dots {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ranking-dots .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #e0e0e0;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+    .ranking-dots .dot.active {
+      width: 22px;
+      border-radius: 4px;
+      background-color: #242424;
+    }
+
+    /* =========================================================
+       7. 따끈따끈, 새로 들어온 책 스타일
+       ========================================================= */
+    .new-books-section {
+      width: 100%;
+      margin-bottom: 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .header-text-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .main-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #111111;
+      letter-spacing: -0.5px;
+    }
+    .sub-title {
+      font-size: 13.5px;
+      color: #767676;
+    }
+    .header-arrow {
+      font-size: 18px;
+      color: #444444;
+      margin-top: 4px;
+      cursor: pointer;
+    }
+
+    .new-books-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      align-items: flex-start;
+      width: 100%;
+    }
+
+    .focus-card-wrap {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .focus-card-box {
+      background-color: #f6f7f9;
+      border-radius: 14px;
+      padding: 18px 16px;
+      display: flex;
+      gap: 14px;
+      position: relative;
+      height: 180px;
+    }
+    .focus-thumb {
+      width: 90px;
+      height: 140px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+      flex-shrink: 0;
+      background-color: #ffffff;
+    }
+    .focus-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .audio-icon-badge {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #6366f1;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+    .btn-add-plus {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      background-color: rgba(0, 0, 0, 0.55);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+    }
+
+    .focus-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      min-width: 0;
+    }
+    .focus-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #222222;
+      line-height: 1.35;
+      height: 38px;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: keep-all;
+    }
+    .focus-author {
+      font-size: 12px;
+      color: #777777;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .badge-audio {
+      display: inline-block;
+      align-self: flex-start;
+      margin-top: 3px;
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-size: 9.5px;
+      font-weight: 600;
+      background-color: #ede9fe;
+      color: #6366f1;
+    }
+
+    .focus-comment {
+      font-size: 12.5px;
+      color: #666666;
+      line-height: 1.4;
+      padding: 0 4px;
+      word-break: keep-all;
+    }
+
+    .scroll-book-list {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 16px;
+      width: 100%;
+    }
+    .sub-book-card {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .sub-thumb-box {
+      width: 100%;
+      aspect-ratio: 1 / 1.45;
+      background-color: #f1f3f5;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 8px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      position: relative;
+    }
+    .sub-thumb-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .sub-thumb-box .btn-add-plus {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+    }
+
+    .sub-book-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #222222;
+      line-height: 1.35;
+      height: 35px;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: keep-all;
+      margin-bottom: 3px;
+    }
+    .sub-book-card:hover .sub-book-title {
+      text-decoration: underline;
+    }
+    .sub-book-author {
+      font-size: 11.5px;
+      color: #888888;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    /* =========================================================
+       8. 출판사에서 자신있게 추천해요 스타일
+       ========================================================= */
+    .publisher-section {
+      width: 100%;
+      margin-bottom: 80px;
+    }
+
+    .publisher-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .publisher-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #111111;
+      letter-spacing: -0.5px;
+    }
+
+    .ad-badge {
+      font-size: 11px;
+      color: #999999;
+      border: 1px solid #e0e0e0;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+
+    .publisher-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 20px;
+      width: 100%;
+    }
+
+    .publisher-card {
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .publisher-thumb-box {
+      width: 100%;
+      aspect-ratio: 1 / 1.48;
+      background-color: #f1f3f5;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      position: relative;
+    }
+
+    .publisher-thumb-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .publisher-card:hover .publisher-book-title {
+      text-decoration: underline;
+    }
+
+    .publisher-book-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #222222;
+      line-height: 1.4;
+      height: 39px;
+      display: -webkit-box;
+      display: box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: keep-all;
+    }
+
+    /* =========================================================
+       9. AI와 함께 읽는 나를 일으킬 책들 스타일
+       ========================================================= */
+    .ai-section {
+      width: 100%;
+      position: relative;
+      margin-bottom: 80px;
+    }
+    .ai-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+    .ai-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .ai-main-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #111111;
+      letter-spacing: -0.5px;
+    }
+    .ai-sub-title {
+      font-size: 13.5px;
+      color: #767676;
+    }
+
+    .ai-nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-arrow-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid #e2e4e7;
+      background-color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #444444;
+      font-size: 13px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+    .nav-arrow-btn:hover {
+      background-color: #f8f9fa;
+      border-color: #cccccc;
+      color: #111111;
+    }
+
+    .ai-scroll-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .ai-card-track {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      padding: 10px 4px 24px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; 
+    }
+    .ai-card-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .ai-card {
+      width: 220px;
+      min-width: 220px;
+      max-width: 220px;
+      border-radius: 22px;
+      padding: 24px 16px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 390px;
+      position: relative;
+      overflow: hidden;
+      color: #ffffff;
+      scroll-snap-align: start;
+      flex-shrink: 0;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .ai-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .theme-purple {
+      background: radial-gradient(circle at 50% 18%, #4a2e80 0%, #1a0f30 68%, #0d071a 100%);
+      box-shadow: 0 10px 24px rgba(74, 46, 128, 0.28);
+    }
+    .theme-pink {
+      background: radial-gradient(circle at 50% 18%, #7e1e5b 0%, #2f0b24 68%, #14030f 100%);
+      box-shadow: 0 10px 24px rgba(126, 30, 91, 0.28);
+    }
+    .theme-blue {
+      background: radial-gradient(circle at 50% 18%, #0284c7 0%, #082f49 68%, #031320 100%);
+      box-shadow: 0 10px 24px rgba(2, 132, 199, 0.28);
+    }
+    .theme-teal {
+      background: radial-gradient(circle at 50% 18%, #0d9488 0%, #042f2e 68%, #021717 100%);
+      box-shadow: 0 10px 24px rgba(13, 148, 136, 0.28);
+    }
+    .theme-indigo {
+      background: radial-gradient(circle at 50% 18%, #4f46e5 0%, #1e1b4b 68%, #0f0d28 100%);
+      box-shadow: 0 10px 24px rgba(79, 70, 229, 0.28);
+    }
+    .theme-amber {
+      background: radial-gradient(circle at 50% 18%, #d97706 0%, #451a03 68%, #1f0a02 100%);
+      box-shadow: 0 10px 24px rgba(217, 119, 6, 0.28);
+    }
+    .theme-emerald {
+      background: radial-gradient(circle at 50% 18%, #059669 0%, #064e3b 68%, #022c22 100%);
+      box-shadow: 0 10px 24px rgba(5, 150, 105, 0.28);
+    }
+    .theme-rose {
+      background: radial-gradient(circle at 50% 18%, #e11d48 0%, #4c0519 68%, #20020a 100%);
+      box-shadow: 0 10px 24px rgba(225, 29, 72, 0.28);
+    }
+
+    .ai-card-top {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      gap: 10px;
+    }
+    .question-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+      background-color: rgba(255, 255, 255, 0.16);
+      padding: 3px 10px;
+      border-radius: 12px;
+      backdrop-filter: blur(4px);
+    }
+    .question-badge i {
+      font-size: 9px;
+    }
+    .question-text {
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.4;
+      color: #ffffff;
+      word-break: keep-all;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .ai-book-thumb {
+      width: 106px;
+      height: 154px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+      background-color: #1a1a1a;
+      margin: 12px 0;
+      flex-shrink: 0;
+    }
+    .ai-book-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .btn-ai-read {
+      width: 100%;
+      height: 38px;
+      border-radius: 19px;
+      background-color: #ffffff;
+      color: #111111;
+      font-size: 12.5px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      transition: all 0.2s ease;
+    }
+    .btn-ai-read:hover {
+      background-color: #f1f3f5;
+    }
+    .btn-ai-read i {
+      font-size: 13px;
+      color: #222222;
+    }
+
+    /* =========================================================
+       10. 이벤트의 정성이 달라요 스타일
+       ========================================================= */
+    .event-section {
+      width: 100%;
+      position: relative;
+      margin-bottom: 80px;
+    }
+
+    .event-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .event-main-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #111111;
+      letter-spacing: -0.5px;
+    }
+
+    .event-category-tabs {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13.5px;
+    }
+    .event-tab-btn {
+      color: #767676;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 2px 0;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .event-tab-btn.active {
+      color: #2d54ea;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .tab-divider {
+      color: #e2e4e7;
+      font-size: 11px;
+    }
+
+    .more-link {
+      font-size: 13px;
+      font-weight: 600;
+      color: #555555;
+    }
+    .more-link:hover {
+      color: #111111;
+    }
+
+    .slider-view-wrapper {
+      position: relative;
+      width: 100%;
+      border-radius: 16px;
+    }
+
+    .slider-overflow-box {
+      width: 100%;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+
+    .event-slider-track {
+      display: flex;
+      width: 100%;
+      transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .event-slide-page {
+      min-width: 100%;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .event-banner-card {
+      width: 100%;
+      aspect-ratio: 375 / 160;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      background-color: #f1f3f5;
+      display: block;
+      cursor: pointer;
+    }
+    .event-banner-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .slider-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #ffffff;
+      border: 1px solid #e0e0e0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: #444444;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.2s ease;
+    }
+    .slider-nav-btn:hover {
+      background-color: #f8f9fa;
+      color: #111111;
+      border-color: #bbbbbb;
+    }
+    .btn-prev {
+      left: -18px;
+    }
+    .btn-next {
+      right: -18px;
+    }
+
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      margin-top: 18px;
+    }
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #e0e0e0;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+    .dot.active {
+      width: 22px;
+      border-radius: 4px;
+      background-color: #242424;
+    }
+
+    /* =========================================================
+       11. 교보문고 푸터
+       ========================================================= */
+    .kyobo-footer {
+      width: 100%;
+      background-color: #ffffff;
+      border-top: 1px solid #eaeaea;
+      color: #666666;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .footer-container {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .footer-notice-bar {
+      border-bottom: 1px solid #f0f0f0;
+      padding: 14px 0;
+    }
+    .notice-wrap {
+      display: flex;
+      align-items: center;
+    }
+    .notice-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      min-width: 0;
+    }
+    .notice-label {
+      color: #111111;
+      font-size: 13px;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .notice-label i {
+      font-size: 9px;
+      color: #888888;
+    }
+    .notice-text {
+      color: #555555;
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .notice-text:hover {
+      text-decoration: underline;
+    }
+    .notice-divider {
+      width: 1px;
+      height: 12px;
+      background-color: #e2e4e7;
+      margin: 0 24px;
+    }
+
+    .footer-main-wrap {
+      padding: 36px 0 60px;
+    }
+    .footer-content-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .footer-left {
+      flex: 1;
+      max-width: 780px;
+    }
+    
+    .footer-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+    .footer-logo {
+      height: 28px;
+      width: auto;
+    }
+    .kcsi-logo-img {
+      height: 32px;
+      width: auto;
+      object-fit: contain;
+      border-left: 1px solid #eaeaea;
+      padding-left: 18px;
+    }
+
+    .footer-policy-menu {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      list-style: none;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .footer-policy-menu li a {
+      color: #444444;
+      font-size: 12.5px;
+    }
+    .footer-policy-menu li a.point-bold {
+      font-weight: 700;
+      color: #111111;
+      text-decoration: underline;
+    }
+
+    .footer-company-info p {
+      color: #767676;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+    .btn-info-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      border: 1px solid #d4d4d4;
+      border-radius: 3px;
+      padding: 1px 6px;
+      font-size: 11px;
+      color: #555555;
+      margin-left: 4px;
+    }
+    .btn-info-check i {
+      font-size: 8px;
+    }
+    .copyright {
+      margin-top: 14px;
+      font-weight: 600;
+      color: #444444;
+    }
+
+    .footer-right {
+      width: 380px;
+      flex-shrink: 0;
+    }
+
+    .footer-select-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .custom-select-wrap {
+      flex: 1;
+      position: relative;
+    }
+    .custom-select-wrap select {
+      width: 100%;
+      height: 38px;
+      border: 1px solid #d4d8dc;
+      border-radius: 6px;
+      padding: 0 12px;
+      font-size: 13px;
+      color: #333333;
+      outline: none;
+      background-color: #ffffff;
+      cursor: pointer;
+      appearance: auto;
+    }
+
+    .toss-service-box {
+      margin-bottom: 18px;
+    }
+    .toss-title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+      font-size: 12px;
+      color: #444444;
+      font-weight: 500;
+    }
+    .btn-toss-check {
+      border: 1px solid #d4d4d4;
+      border-radius: 3px;
+      padding: 1px 6px;
+      font-size: 11px;
+      color: #555555;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .btn-toss-check i {
+      font-size: 8px;
+    }
+    .toss-desc {
+      font-size: 11.5px;
+      color: #888888;
+      line-height: 1.45;
+    }
+
+    .isms-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px solid #f0f0f0;
+      padding-top: 14px;
+    }
+    .isms-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .isms-badge {
+      background-color: #0d47a1;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 11px;
+      padding: 4px 6px;
+      border-radius: 3px;
+    }
+    .isms-name {
+      font-size: 11px;
+      font-weight: 700;
+      color: #333333;
+      line-height: 1.25;
+    }
+    .isms-desc {
+      font-size: 11px;
+      color: #888888;
+      line-height: 1.35;
+    }
+
+    /* 반응형 대응 */
+    @media (max-width: 1200px) {
+      .search-bar-inline {
+        width: 320px;
+      }
+      .scroll-book-list {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    @media (max-width: 1024px) {
+      .ranking-slide-page {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .publisher-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px 16px;
+      }
+      .life-book-banner-card {
+        padding: 30px;
+        gap: 24px;
+      }
+      .slide-title-main {
+        font-size: 32px;
+      }
+      .slide-item {
+        padding: 0 40px;
+      }
+    }
+    @media (max-width: 900px) {
+      .sub-nav-row {
+        flex-direction: column;
+        height: auto;
+        padding: 10px 0;
+        gap: 12px;
+        align-items: stretch;
+      }
+      .search-bar-inline {
+        width: 100%;
+      }
+      .new-books-layout {
+        grid-template-columns: 1fr;
+      }
+      .scroll-book-list {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .life-book-banner-card {
+        flex-direction: column;
+      }
+      .life-book-left-visual {
+        width: 100%;
+      }
+      .life-book-right-review {
+        width: 100%;
+        max-width: 100%;
+      }
+      .event-slide-page {
+        grid-template-columns: 1fr;
+      }
+      .footer-content-grid {
+        flex-direction: column;
+        gap: 30px;
+      }
+      .footer-right {
+        width: 100%;
+      }
+      .notice-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .notice-divider {
+        display: none;
+      }
+      .slide-single-cover, .slide-double-covers, .cat-visual-card {
+        display: none;
+      }
+      .slide-item {
+        justify-content: center;
+        text-align: center;
+      }
+    }
+    @media (max-width: 640px) {
+      .ranking-slide-page {
+        grid-template-columns: 1fr;
+      }
+      .scroll-book-list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .publisher-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================
+       1. HEADER (메인 상단 GNB 및 검색바)
+       ========================================================= -->
+  <header>
+    <div class="container">
+      <div class="gnb-top">
+        <div class="gnb-left">
+          <!-- 교보문고 로고 자리 -->
+          <a href="#" class="brand-logo-slot">
+            <img src="./img/logo.png" alt="교보문고 로고" onerror="this.style.display='none'">
+          </a>
+
+          <!-- 메인 내비게이션 -->
+          <nav>
+            <ul class="main-nav">
+              <li><a href="#" class="active">투데이</a></li>
+              <li><a href="#">웹툰웹소<span class="badge-dot"></span></a></li>
+              <li><a href="#">베스트</a></li>
+              <li><a href="#">이벤트</a></li>
+              <li><a href="#">바로출판</a></li>
+              <li><a href="#">컬처라운지</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <!-- 우측 상단 유틸 버튼 (알림, 장바구니, 전체메뉴 등) -->
+        <div class="gnb-right">
+          <button class="icon-btn" aria-label="알림" title="알림"><i class="fa-regular fa-bell"></i></button>
+          <button class="icon-btn" aria-label="장바구니" title="장바구니"><i class="fa-solid fa-cart-shopping"></i></button>
+          <button class="icon-btn" aria-label="전체메뉴" title="전체메뉴"><i class="fa-solid fa-bars"></i></button>
+          <a href="#" class="btn-auth-link">회원가입</a>
+          <a href="#" class="btn-login">로그인</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 서브 내비게이션 탭 & 우측 긴 타원형 통합검색창 -->
+  <div class="sub-nav-wrapper">
+    <div class="container">
+      <div class="sub-nav-row">
+        <ul class="sub-nav">
+          <li><a href="#">베스트</a></li>
+          <li><a href="#" class="active">NOW</a></li>
+          <li><a href="#">신상품</a></li>
+          <li><a href="#">오디오북</a></li>
+          <li><a href="#">✨ AI발견</a></li>
+          <li><a href="#">PICKS</a></li>
+        </ul>
+
+        <div class="search-bar-inline">
+          <input type="text" id="searchInput" placeholder="포기했던 고전 <오디세이>, 비주얼로 단숨에 완독!">
+          <button class="search-btn" id="searchBtn" aria-label="검색">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 메인 콘텐츠 -->
+  <main class="container">
+    <!-- =========================================================
+         2. 메인 배너 슬라이더 (4종 텍스트 + 고화질 표지 목업)
+         ========================================================= -->
+    <div class="hero-slider-container">
+      <button class="hero-nav-btn btn-prev" id="heroPrevBtn" aria-label="이전 배너"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="hero-nav-btn btn-next" id="heroNextBtn" aria-label="다음 배너"><i class="fa-solid fa-chevron-right"></i></button>
+
+      <section class="hero-slider-wrap">
+        <div class="slider-track" id="sliderTrack">
+          
+          <!-- 슬라이드 1 : 긴나미 상점가의 사건 노트 (옐로 테마) - sub.html로 이동 링크 추가 -->
+          <div class="slide-item slide-theme-yellow" onclick="location.href='sub.html'">
+            <div class="slide-text-box">
+              <h2 class="slide-title-main">누구의 시점으로<br>나는 추리할까?</h2>
+              <p class="slide-desc-sub">한 사건을 두 개의 추리로 즐기기</p>
+            </div>
+            <div class="slide-visual-box">
+              <div class="slide-double-covers">
+                <div class="cover-card">
+                  <img src="img/slider/10.webp" alt="긴나미 상점가의 사건 노트 형제 편" onerror="this.onerror=null; this.src='https://via.placeholder.com/175x255/f1f3f5/888888?text=Book+A';">
+                </div>
+                <div class="cover-card">
+                  <img src="img/slider/09.webp" alt="긴나미 상점가의 사건 노트 자매 편" onerror="this.onerror=null; this.src='https://via.placeholder.com/175x255/f1f3f5/888888?text=Book+B';">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 슬라이드 2 : 꿈이다 아니다 (블루 테마) - sub.html로 이동 링크 추가 -->
+          <div class="slide-item slide-theme-blue-main" onclick="location.href='sub.html'">
+            <div class="slide-text-box">
+              <h2 class="slide-title-main">완벽한 꿈이라면<br>깨지 않아도 될까</h2>
+              <p class="slide-desc-sub">김중혁이 그린 가장 매혹적인 낙원</p>
+            </div>
+            <div class="slide-visual-box">
+              <div class="slide-single-cover">
+                <img src="img/slider/06.jpg" alt="꿈이다 아니다 표지" onerror="this.onerror=null; this.src='https://via.placeholder.com/220x315/f1f3f5/888888?text=Cover+06';">
+              </div>
+            </div>
+          </div>
+
+          <!-- 슬라이드 3 : 좋아한다 말하기엔 조금 숨이 차지만 (스카이블루 테마) - sub.html로 이동 링크 추가 -->
+          <div class="slide-item slide-theme-sky-main" onclick="location.href='sub.html'">
+            <div class="slide-text-box">
+              <h2 class="slide-title-main">러닝하고 마시는<br>맥주 한 잔의 맛</h2>
+              <p class="slide-desc-sub">달리는 작가 7인이 기록한 짜릿한 순간들</p>
+            </div>
+            <div class="slide-visual-box">
+              <div class="slide-single-cover">
+                <img src="img/slider/08.jpg" alt="좋아한다 말하기엔 조금 숨이 차지만 표지" onerror="this.onerror=null; this.src='https://via.placeholder.com/220x315/f1f3f5/888888?text=Cover+08';">
+              </div>
+            </div>
+          </div>
+
+          <!-- 슬라이드 4 : 리딩플로우: 광화문 청춘은 고양이 (딥블루 테마 & 고양이 그래픽) - sub.html로 이동 링크 추가 -->
+          <div class="slide-item slide-theme-blue-cat" onclick="location.href='sub.html'">
+            <div class="slide-text-box">
+              <span class="slide-badge-tag">컬처라운지</span>
+              <h2 class="slide-title-main">리딩플로우: 광화문<br>청춘은 고양이</h2>
+              <p class="slide-desc-sub">함께 나누는 청춘 이야기</p>
+            </div>
+            <div class="slide-visual-box">
+              <div class="cat-visual-card">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 슬라이더 컨트롤러 배지 -->
+        <div class="slider-badge">
+          <i class="fa-solid fa-pause" id="playPauseBtn"></i>
+          <span id="slideCounter">1 / 4 +</span>
+        </div>
+      </section>
+    </div>
+
+    <!-- 3. 원형 키워드 퀵메뉴 -->
+    <div class="keyword-container">
+      <div class="keyword-bar">
+        <button class="keyword-item" onclick="filterRanking('일본미스터리')">
+          <div class="circle-icon dark"><i class="fa-solid fa-magnifying-glass"></i></div>
+          <span>일본미스터리</span>
+        </button>
+        <button class="keyword-item" onclick="filterRanking('추천도서')">
+          <div class="circle-icon" style="color: #3b82f6;"><i class="fa-solid fa-bookmark"></i></div>
+          <span>추천챌린지</span>
+        </button>
+        <button class="keyword-item" onclick="filterRanking('에세이')">
+          <div class="circle-icon" style="color: #ec4899;"><i class="fa-solid fa-pen-nib"></i></div>
+          <span>작가모음</span>
+        </button>
+        <button class="keyword-item" onclick="filterRanking('이벤트')">
+          <div class="circle-icon" style="color: #a855f7;"><i class="fa-solid fa-bullhorn"></i></div>
+          <span>이벤트</span>
+        </button>
+        <button class="keyword-item" onclick="filterRanking('신간도서')">
+          <div class="circle-icon" style="color: #f59e0b;"><i class="fa-regular fa-calendar-check"></i></div>
+          <span>공개예정</span>
+        </button>
+        <button class="keyword-item" onclick="filterRanking('자기계발')">
+          <div class="circle-icon" style="color: #eab308;"><i class="fa-regular fa-lightbulb"></i></div>
+          <span>숨은꿀팁</span>
+        </button>
+        <button class="keyword-item" onclick="filterRanking('소설')">
+          <div class="circle-icon" style="color: #10b981;"><i class="fa-solid fa-certificate"></i></div>
+          <span>새로들어온책</span>
+        </button>
+        <button class="keyword-item" onclick="filterRanking('베스트셀러')">
+          <div class="circle-icon" style="color: #f97316;"><i class="fa-solid fa-store"></i></div>
+          <span>서점베스트</span>
+        </button>
+        <button class="keyword-item" onclick="filterRanking('인문학')">
+          <div class="circle-icon" style="color: #6366f1;"><i class="fa-solid fa-shapes"></i></div>
+          <span>카테고리</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 5. 랭킹 베스트 섹션 (10개씩 3페이지 = 총 30권 슬라이더) -->
+    <section class="ranking-section">
+      <div class="ranking-main-title">
+        <div class="title-tabs">
+          <span class="title-tab-item">베스트 셀러</span>
+        </div>
+        <div class="title-more-arrow" onclick="location.href='sub.html'">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+
+      <div class="category-filter-bar">
+        <button class="cat-btn active" onclick="filterRanking('추천 도서', this)">종합</button>
+        <button class="cat-btn" onclick="filterRanking('한국 소설', this)">소설</button>
+        <button class="cat-btn" onclick="filterRanking('경제 트렌드', this)">경제경영</button>
+        <button class="cat-btn" onclick="filterRanking('자기계발 성공', this)">자기계발</button>
+        <button class="cat-btn" onclick="filterRanking('인기 에세이', this)">에세이/시</button>
+        <button class="cat-btn" onclick="filterRanking('인문학 교양', this)">인문/교양</button>
+        <button class="cat-btn" onclick="filterRanking('취미 실용', this)">취미/실용</button>
+        <button class="cat-btn" onclick="filterRanking('청소년 문학', this)">어린이/청소년</button>
+        <button class="cat-btn" onclick="filterRanking('월간 잡지', this)">매거진</button>
+      </div>
+
+      <div class="sub-filter-bar">
+        <div class="date-dropdown">
+          <span>일간</span> <i class="fa-solid fa-chevron-down" style="font-size: 11px;"></i>
+        </div>
+        <div class="update-date">
+          <span>2026.08.27</span> <i class="fa-regular fa-circle-question"></i>
+        </div>
+      </div>
+
+      <!-- 10개씩 3페이지 슬라이더 뷰 -->
+      <div class="ranking-slider-wrap">
+        <button class="ranking-nav-btn btn-prev" id="rankPrevBtn" title="이전"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="ranking-nav-btn btn-next" id="rankNextBtn" title="다음"><i class="fa-solid fa-chevron-right"></i></button>
+
+        <div class="ranking-overflow-box">
+          <div class="ranking-slider-track" id="rankingSliderTrack"></div>
+        </div>
+      </div>
+
+      <!-- 페이지 번호 및 닷 인디케이터 -->
+      <div class="ranking-pagination">
+        <span class="ranking-page-text" id="rankingPageText">1 / 3 페이지</span>
+        <div class="ranking-dots" id="rankingSliderDots"></div>
+      </div>
+    </section>
+
+    <!-- 4. 오늘의 인생책 섹션 (클릭 시 sub.html 이동) -->
+    <section class="life-book-section">
+      <div class="life-book-header">
+        <div class="life-book-title-wrap">
+          <h2 class="life-book-main-title">오늘의 인생책</h2>
+          <p class="life-book-sub-title">08월 27일 목요일 업데이트</p>
+        </div>
+        <div class="life-book-arrow" onclick="location.href='sub.html'">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+
+      <a href="sub.html" class="life-book-banner-card">
+        <!-- 좌측 도서 비주얼 카드 -->
+        <div class="life-book-left-visual">
+          <div class="life-book-cover-wrap">
+            <img id="lifeBookCover" src="./img/main/00.jpg" alt="오늘의 인생책 표지" loading="lazy" onerror="this.onerror=null; this.src='https://via.placeholder.com/154x226/f1f3f5/888888?text=Book';">
+            <span class="life-book-plus-badge"><i class="fa-solid fa-plus"></i></span>
+          </div>
+        </div>
+
+        <!-- 우측 회원 리뷰 카드 -->
+        <div class="life-book-right-review">
+          <div class="reviewer-profile">
+            <div class="reviewer-avatar">
+              <img id="reviewerAvatar" src="./img/main/img.jpg" alt="추천인 프로필" loading="lazy" onerror="this.onerror=null; this.src='https://via.placeholder.com/44x44/f1f3f5/888888?text=User';">
+            </div>
+            <div class="reviewer-meta">
+              <span class="reviewer-badge-txt">밀리 회원의 인생책</span>
+              <span class="reviewer-name">고민보다고은목서 님의 추천</span>
+            </div>
+          </div>
+
+          <div class="review-quote-box">
+            <span class="quote-mark open">“</span>
+            <p class="review-body-text">
+              어느 순간 책을 읽는 내내 내용이 영화처럼 펼쳐진다. 너무도 감격해 지인들에게 여러 권 나눠줬다.
+            </p>
+            <span class="quote-mark close">”</span>
+          </div>
+
+          <div class="review-footer-list">
+            <div class="review-point-item">
+              <i class="fa-solid fa-check"></i>
+              <span>2026년 8월 평균 별점 4.5</span>
+            </div>
+            <div class="review-point-item">
+              <i class="fa-solid fa-check"></i>
+              <span>한국 문학의 거장 황석영 최신작</span>
+            </div>
+          </div>
+        </div>
+      </a>
+    </section>
+
+    <!-- 6. 따끈따끈, 새로 들어온 책 섹션 (여백 없는 뷰) -->
+    <section class="new-books-section">
+      <div class="section-header">
+        <div class="header-text-wrap">
+          <h2 class="main-title">따끈따끈, 새로 들어온 책</h2>
+          <p class="sub-title">기다리던 책, 바로 만나보세요</p>
+        </div>
+        <div class="header-arrow" onclick="location.href='sub.html'">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+
+      <div class="category-filter-bar">
+        <button class="cat-btn active" onclick="filterNewBooks('신간 도서', this)">종합</button>
+        <button class="cat-btn" onclick="filterNewBooks('한국소설', this)">소설</button>
+        <button class="cat-btn" onclick="filterNewBooks('경제 트렌드', this)">경제/경영</button>
+        <button class="cat-btn" onclick="filterNewBooks('자기계발', this)">자기계발</button>
+        <button class="cat-btn" onclick="filterNewBooks('에세이', this)">에세이/시</button>
+        <button class="cat-btn" onclick="filterNewBooks('인문학', this)">인문/교양</button>
+        <button class="cat-btn" onclick="filterNewBooks('라이프스타일', this)">취미/실용</button>
+        <button class="cat-btn" onclick="filterNewBooks('동화', this)">어린이/청소년</button>
+        <button class="cat-btn" onclick="filterNewBooks('매거진', this)">매거진</button>
+      </div>
+
+      <div class="new-books-layout">
+        <!-- [좌측] 1번째 고정 포커스 카드 -> sub.html 이동 -->
+        <a href="sub.html" class="focus-card-wrap" id="focusCardWrap">
+          <div class="focus-card-box">
+            <div class="focus-thumb">
+              <span class="audio-icon-badge"><i class="fa-solid fa-headphones"></i></span>
+              <img id="focusThumb" src="https://via.placeholder.com/200x290/f1f3f5/888888?text=Loading" alt="포커스 도서 표지">
+              <span class="btn-add-plus"><i class="fa-solid fa-plus"></i></span>
+            </div>
+            <div class="focus-info">
+              <div class="focus-title" id="focusTitle">도서 불러오는 중...</div>
+              <div class="focus-author" id="focusAuthor">저자</div>
+              <span class="badge-audio">오디오북</span>
+            </div>
+          </div>
+          <p class="focus-comment" id="focusComment">
+            새로 입고된 따끈따끈한 신간을 만나보세요.
+          </p>
+        </a>
+
+        <!-- [우측] 2~8번째 서브 도서 7개 꽉 찬 그리드 -->
+        <div class="scroll-book-list" id="subBookList"></div>
+      </div>
+    </section>
+
+    <!-- 7. 출판사에서 자신있게 추천해요 섹션 -->
+    <section class="publisher-section">
+      <div class="publisher-header">
+        <h2 class="publisher-title">출판사에서 자신있게 추천해요</h2>
+        <span class="ad-badge" title="광고">AD</span>
+      </div>
+
+      <div class="publisher-grid" id="publisherGrid"></div>
+    </section>
+
+    <!-- 8. AI와 함께 읽는 나를 일으킬 책들 섹션 -->
+    <section class="ai-section">
+      <div class="ai-header">
+        <div class="ai-title-wrap">
+          <h2 class="ai-main-title">AI와 함께 읽는 나를 일으킬 책들</h2>
+          <p class="ai-sub-title">책의 핵심 정보만 쏙쏙 찾아주는 AI 독파밍</p>
+        </div>
+        <div class="ai-nav-controls">
+          <button class="nav-arrow-btn" id="scrollLeftBtn" title="이전 보기"><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="nav-arrow-btn" id="scrollRightBtn" title="다음 보기"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+
+      <div class="ai-scroll-wrapper">
+        <div class="ai-card-track" id="aiCardTrack"></div>
+      </div>
+    </section>
+
+    <!-- 9. 이벤트의 정성이 달라요 섹션 -->
+    <section class="event-section">
+      <div class="event-header">
+        <div class="header-left">
+          <h2 class="event-main-title">이벤트의 정성이 달라요</h2>
+          <div class="event-category-tabs">
+            <button class="event-tab-btn active" id="tabKyobo" onclick="goToSlide(0)">교보문고</button>
+            <span class="tab-divider">|</span>
+            <button class="event-tab-btn" id="tabEbook" onclick="goToSlide(1)">eBook</button>
+          </div>
+        </div>
+
+        <a href="#" class="more-link">더보기 +</a>
+      </div>
+
+      <div class="slider-view-wrapper">
+        <button class="slider-nav-btn btn-prev" id="eventPrevBtn" title="이전"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="slider-nav-btn btn-next" id="eventNextBtn" title="다음"><i class="fa-solid fa-chevron-right"></i></button>
+
+        <div class="slider-overflow-box">
+          <div class="event-slider-track" id="eventSliderTrack"></div>
+        </div>
+      </div>
+
+      <div class="slider-dots" id="eventSliderDots"></div>
+    </section>
+  </main>
+
+  <!-- =========================================================
+       10. 교보문고 푸터 컴포넌트
+       ========================================================= -->
+  <footer class="kyobo-footer">
+    <div class="footer-notice-bar">
+      <div class="footer-container notice-wrap">
+        <div class="notice-item">
+          <a href="#" class="notice-label"><strong>공지사항</strong> <i class="fa-solid fa-chevron-right"></i></a>
+          <a href="#" class="notice-text" id="footerNoticeText">회원등급 산정 순수구매액 '교보e캐시' 적용 기준 변경 안내</a>
+        </div>
+        <div class="notice-divider"></div>
+        <div class="notice-item">
+          <a href="#" class="notice-label"><strong>당첨자발표</strong> <i class="fa-solid fa-chevron-right"></i></a>
+          <a href="#" class="notice-text" id="footerWinnerText">[sam] 제21회 책강 김헌 &lt;오뒷세이아&gt; 강연 당첨자 발표 안내</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-main-wrap">
+      <div class="footer-container footer-content-grid">
+        <div class="footer-left">
+          <div class="footer-logo-row">
+            <img src="img/logo.png" alt="교보문고" class="footer-logo">
+            <img src="./img/footer/01.png" alt="2025년 한국산업의 고객만족도 온라인서점 부문 1위 KMAC 선정 KCSI" class="kcsi-logo-img" onerror="this.onerror=null; this.src='https://image.kyobobook.co.kr/ink/images/common/footer/img_kcsi.png';">
+          </div>
+
+          <ul class="footer-policy-menu">
+            <li><a href="#">회사소개</a></li>
+            <li><a href="#">이용약관</a></li>
+            <li><a href="#" class="point-bold">개인정보처리방침</a></li>
+            <li><a href="#">청소년보호정책</a></li>
+            <li><a href="#">대량구매서비스</a></li>
+            <li><a href="#">협력사여러분</a></li>
+            <li><a href="#">채용정보</a></li>
+            <li><a href="#">광고소개</a></li>
+          </ul>
+
+          <div class="footer-company-info">
+            <p>
+              (주)교보문고 &nbsp;|&nbsp; 서울특별시 종로구 종로1 &nbsp;|&nbsp; 대표이사 : 허정도 &nbsp;|&nbsp; 사업자등록번호 : 102-81-11670 
+              <a href="#" class="btn-info-check">사업자정보확인 <i class="fa-solid fa-chevron-right"></i></a>
+            </p>
+            <p>
+              대표전화(발신자부담) : 1544-1900(교보문고) &nbsp;·&nbsp; 1661-1112(핫트랙스) &nbsp;|&nbsp; FAX : 0502-987-5711(지역번호 공통)
+            </p>
+            <p>서울특별시 통신판매업신고번호 : 제 653호</p>
+            <p class="copyright">© KYOBO BOOK CENTRE</p>
+          </div>
+        </div>
+
+        <div class="footer-right">
+          <div class="footer-select-row">
+            <div class="custom-select-wrap">
+              <select id="familySiteSelect" onchange="if(this.value) window.open(this.value, '_blank')">
+                <option value="">Family Site</option>
+                <option value="https://www.kyobo.com">교보생명</option>
+                <option value="https://www.iprovest.com">교보증권</option>
+                <option value="https://www.lifeplanet.co.kr">교보라이프플래닛</option>
+              </select>
+            </div>
+            <div class="custom-select-wrap">
+              <select id="snsSelect" onchange="if(this.value) window.open(this.value, '_blank')">
+                <option value="">SNS 바로가기</option>
+                <option value="https://youtube.com">유튜브</option>
+                <option value="https://instagram.com">인스타그램</option>
+                <option value="https://facebook.com">페이스북</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="toss-service-box">
+            <div class="toss-title-row">
+              <span>토스페이먼츠 구매안전서비스</span>
+              <a href="#" class="btn-toss-check">서비스가입확인 <i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+            <p class="toss-desc">
+              고객님은 안전거래를 위해 현금 등으로 결제시 저희 쇼핑몰에서 가입한 토스페이먼츠의 구매안전서비스를 이용하실 수 있습니다.
+            </p>
+          </div>
+
+          <div class="isms-box">
+            <div class="isms-logo-wrap">
+              <div class="isms-badge">ISMS</div>
+              <span class="isms-name">정보보호관리체계<br>ISMS 인증획득</span>
+            </div>
+            <div class="isms-desc">
+              <p>[인증범위] 인터넷 교보문고 및 브랜드 서비스 운영</p>
+              <p>[유효기간] 2023.11.15 ~ 2026.11.14</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================
+       JavaScript 영역
+       ========================================================= -->
+  <!-- 1. 메인 슬라이더 JS -->
+  <script>
+    {
+      const track = document.getElementById('sliderTrack');
+      const counter = document.getElementById('slideCounter');
+      const playPauseBtn = document.getElementById('playPauseBtn');
+      const prevBtn = document.getElementById('heroPrevBtn');
+      const nextBtn = document.getElementById('heroNextBtn');
+
+      let currentHeroIndex = 0;
+      const totalHeroSlides = 4;
+      let isHeroPlaying = true;
+      let heroSliderInterval = null;
+
+      function updateHeroSlider() {
+        track.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
+        counter.innerText = `${currentHeroIndex + 1} / ${totalHeroSlides} +`;
+      }
+
+      function nextHeroSlide() {
+        currentHeroIndex = (currentHeroIndex + 1) % totalHeroSlides;
+        updateHeroSlider();
+      }
+
+      function prevHeroSlide() {
+        currentHeroIndex = (currentHeroIndex - 1 + totalHeroSlides) % totalHeroSlides;
+        updateHeroSlider();
+      }
+
+      function startHeroAutoSlide() {
+        if (heroSliderInterval) clearInterval(heroSliderInterval);
+        heroSliderInterval = setInterval(nextHeroSlide, 4000);
+      }
+
+      function stopHeroAutoSlide() {
+        clearInterval(heroSliderInterval);
+      }
+
+      playPauseBtn.addEventListener('click', () => {
+        if (isHeroPlaying) {
+          stopHeroAutoSlide();
+          playPauseBtn.className = 'fa-solid fa-play';
+        } else {
+          startHeroAutoSlide();
+          playPauseBtn.className = 'fa-solid fa-pause';
+        }
+        isHeroPlaying = !isHeroPlaying;
+      });
+
+      prevBtn.addEventListener('click', () => {
+        prevHeroSlide();
+        if (isHeroPlaying) startHeroAutoSlide();
+      });
+
+      nextBtn.addEventListener('click', () => {
+        nextHeroSlide();
+        if (isHeroPlaying) startHeroAutoSlide();
+      });
+
+      updateHeroSlider();
+      startHeroAutoSlide();
+    }
+  </script>
+
+  <!-- 2. 랭킹 베스트 JS (10개씩 3페이지 = 총 30권 슬라이더) -->
+  <script>
+    {
+      const KAKAO_REST_API_KEY = '9a318e0b10ce20c64ed53f01aa34e8c1';
+      const BOOKS_PER_PAGE = 10;
+      const MAX_PAGES = 3;
+      const TOTAL_REQUIRED_BOOKS = BOOKS_PER_PAGE * MAX_PAGES;
+
+      const track = document.getElementById('rankingSliderTrack');
+      const dotsContainer = document.getElementById('rankingSliderDots');
+      const pageText = document.getElementById('rankingPageText');
+      const prevBtn = document.getElementById('rankPrevBtn');
+      const nextBtn = document.getElementById('rankNextBtn');
+
+      let currentRankingSlide = 0;
+      let totalRankingPages = 3;
+
+      async function fetchRankingBooks(keyword) {
+        track.innerHTML = '<p style="color:#999; text-align:center; padding:50px 0; width:100%;">도서 랭킹을 불러오는 중입니다...</p>';
+        dotsContainer.innerHTML = '';
+        currentRankingSlide = 0;
+
+        const url = `https://dapi.kakao.com/v3/search/book?query=${encodeURIComponent(keyword)}&page=1&size=50&sort=accuracy`;
+
+        try {
+          const response = await fetch(url, {
+            headers: { 'Authorization': `KakaoAK ${KAKAO_REST_API_KEY}` }
+          });
+
+          if (!response.ok) throw new Error(`API 통신 에러: ${response.status}`);
+
+          const data = await response.json();
+          renderRankingSlider(data.documents);
+        } catch (err) {
+          console.error('랭킹 도서 로드 에러:', err);
+          track.innerHTML = '<p style="color:#999; text-align:center; padding:50px 0; width:100%;">랭킹 도서를 불러오지 못했습니다.</p>';
+        }
+      }
+
+      function renderRankingSlider(books) {
+        if (!books || books.length === 0) {
+          track.innerHTML = '<p style="color:#999; text-align:center; padding:50px 0; width:100%;">도서 결과가 없습니다.</p>';
+          return;
+        }
+
+        const validBooks = books.filter(book => {
+          const hasThumb = book.thumbnail && book.thumbnail.trim() !== '';
+          const title = (book.title || '').trim();
+          return hasThumb && title !== '베스트셀러' && title !== '베스트 셀러' && !title.startsWith('베스트셀러 (');
+        });
+
+        if (validBooks.length === 0) {
+          track.innerHTML = '<p style="color:#999; text-align:center; padding:50px 0; width:100%;">조건에 맞는 도서가 없습니다.</p>';
+          return;
+        }
+
+        const targetBooks = validBooks.slice(0, TOTAL_REQUIRED_BOOKS);
+        totalRankingPages = Math.min(MAX_PAGES, Math.ceil(targetBooks.length / BOOKS_PER_PAGE));
+
+        track.innerHTML = '';
+        dotsContainer.innerHTML = '';
+
+        for (let i = 0; i < totalRankingPages; i++) {
+          const pageBooks = targetBooks.slice(i * BOOKS_PER_PAGE, (i + 1) * BOOKS_PER_PAGE);
+          const pageEl = document.createElement('div');
+          pageEl.className = 'ranking-slide-page';
+
+          pageBooks.forEach((book, index) => {
+            const rank = i * BOOKS_PER_PAGE + (index + 1);
+            const thumb = book.thumbnail;
+            const title = book.title;
+            const authors = (book.authors && book.authors.length > 0) ? book.authors.join(', ') : '저자 미상';
+            const translators = (book.translators && book.translators.length > 0) ? ` / ${book.translators.join(', ')} 옮김` : '';
+            const authorText = `${authors}${translators}`;
+            const showBadge = (rank % 3 === 0);
+
+            // [수정] 랭킹 베스트 카드 클릭 시 sub.html로 이동하도록 처리
+            const card = document.createElement('a');
+            card.href = 'sub.html';
+            card.className = 'ranking-card';
+            card.innerHTML = `
+              <div class="rank-number">${rank}</div>
+              <div class="rank-thumb-box">
+                <img src="${thumb}" alt="${title}" loading="lazy">
+              </div>
+              <div class="rank-info">
+                <div class="rank-title" title="${title}">${title}</div>
+                <div class="rank-author" title="${authorText}">${authorText}</div>
+                ${showBadge ? '<span class="badge-tag">오디오북</span>' : ''}
+              </div>
+            `;
+            pageEl.appendChild(card);
+          });
+
+          track.appendChild(pageEl);
+
+          const dot = document.createElement('div');
+          dot.className = `dot ${i === 0 ? 'active' : ''}`;
+          dot.addEventListener('click', () => goToRankingSlide(i));
+          dotsContainer.appendChild(dot);
+        }
+
+        updateRankingSliderPosition();
+      }
+
+      function updateRankingSliderPosition() {
+        track.style.transform = `translateX(-${currentRankingSlide * 100}%)`;
+        pageText.innerText = `${currentRankingSlide + 1} / ${totalRankingPages} 페이지`;
+
+        const dots = dotsContainer.querySelectorAll('.dot');
+        dots.forEach((dot, idx) => {
+          dot.classList.toggle('active', idx === currentRankingSlide);
+        });
+      }
+
+      function goToRankingSlide(pageIndex) {
+        currentRankingSlide = pageIndex;
+        updateRankingSliderPosition();
+      }
+
+      prevBtn.addEventListener('click', () => {
+        currentRankingSlide = (currentRankingSlide - 1 + totalRankingPages) % totalRankingPages;
+        updateRankingSliderPosition();
+      });
+
+      nextBtn.addEventListener('click', () => {
+        currentRankingSlide = (currentRankingSlide + 1) % totalRankingPages;
+        updateRankingSliderPosition();
+      });
+
+      window.filterRanking = function(keyword, btnElement) {
+        document.querySelectorAll('.ranking-section .cat-btn').forEach(b => b.classList.remove('active'));
+        if (btnElement) btnElement.classList.add('active');
+        fetchRankingBooks(keyword);
+      };
+
+      window.addEventListener('DOMContentLoaded', () => {
+        fetchRankingBooks('추천 도서');
+      });
+    }
+  </script>
+
+  <!-- 3. 따끈따끈 새로 들어온 책 & 통합 검색 JS -->
+  <script>
+    {
+      const KAKAO_REST_API_KEY = '9a318e0b10ce20c64ed53f01aa34e8c1';
+      const focusCardWrap = document.getElementById('focusCardWrap');
+      const focusThumb = document.getElementById('focusThumb');
+      const focusTitle = document.getElementById('focusTitle');
+      const focusAuthor = document.getElementById('focusAuthor');
+      const focusComment = document.getElementById('focusComment');
+      const subBookList = document.getElementById('subBookList');
+      const searchInput = document.getElementById('searchInput');
+      const searchBtn = document.getElementById('searchBtn');
+
+      async function fetchNewBooks(keyword) {
+        const url = `https://dapi.kakao.com/v3/search/book?query=${encodeURIComponent(keyword)}&size=8&sort=latest`;
+
+        try {
+          const response = await fetch(url, {
+            method: 'GET',
+            headers: { 'Authorization': `KakaoAK ${KAKAO_REST_API_KEY}` }
+          });
+
+          if (!response.ok) throw new Error(`API 에러: ${response.status}`);
+          
+          const data = await response.json();
+          renderNewBooks(data.documents);
+        } catch (err) {
+          console.error('신간 도서 로드 에러:', err);
+          subBookList.innerHTML = '<p style="color:#999; padding:30px 0; grid-column:1/-1;">도서를 불러오지 못했습니다.</p>';
+        }
+      }
+
+      function renderNewBooks(books) {
+        if (!books || books.length === 0) {
+          subBookList.innerHTML = '<p style="color:#999; padding:30px 0; grid-column:1/-1;">검색된 신간 도서가 없습니다.</p>';
+          return;
+        }
+
+        const firstBook = books[0];
+        const firstThumb = (firstBook.thumbnail && firstBook.thumbnail.trim()) ? firstBook.thumbnail : 'https://via.placeholder.com/200x290/f1f3f5/888888?text=No+Cover';
+        
+        // [수정] 포커스 카드 클릭 시 sub.html로 이동
+        focusCardWrap.href = 'sub.html';
+        focusThumb.src = firstThumb;
+        focusThumb.onerror = () => { focusThumb.src = 'https://via.placeholder.com/200x290/f1f3f5/888888?text=No+Cover'; };
+        focusTitle.innerText = firstBook.title || '제목 정보 없음';
+        focusTitle.title = firstBook.title || '';
+        focusAuthor.innerText = (firstBook.authors && firstBook.authors.length) ? firstBook.authors.join(', ') : '저자 미상';
+        
+        if (firstBook.contents && firstBook.contents.trim() !== '') {
+          focusComment.innerText = '줄거리 "' + firstBook.contents.slice(0, 42) + '..."';
+        } else {
+          focusComment.innerText = '새로 입고된 따끈따끈한 추천 신간입니다.';
+        }
+
+        subBookList.innerHTML = '';
+        const remainingBooks = books.slice(1, 8);
+
+        remainingBooks.forEach(book => {
+          const thumb = (book.thumbnail && book.thumbnail.trim()) ? book.thumbnail : 'https://via.placeholder.com/200x290/f1f3f5/888888?text=No+Cover';
+          const title = book.title || '제목 없음';
+          const authors = (book.authors && book.authors.length > 0) ? book.authors.join(', ') : '저자 미상';
+          const translators = (book.translators && book.translators.length > 0) ? ` / ${book.translators.join(', ')} 옮김` : '';
+          const authorText = `${authors}${translators}`;
+
+          // [수정] 서브 도서 카드 클릭 시 sub.html로 이동
+          const card = document.createElement('a');
+          card.href = 'sub.html';
+          card.className = 'sub-book-card';
+          card.innerHTML = `
+            <div class="sub-thumb-box">
+              <img src="${thumb}" alt="${title}" loading="lazy" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x290/f1f3f5/888888?text=No+Cover';">
+              <span class="btn-add-plus"><i class="fa-solid fa-plus"></i></span>
+            </div>
+            <div class="sub-book-title" title="${title}">${title}</div>
+            <div class="sub-book-author" title="${authorText}">${authorText}</div>
+          `;
+          subBookList.appendChild(card);
+        });
+      }
+
+      function handleSearch() {
+        const query = searchInput.value.trim();
+        if (query) {
+          fetchNewBooks(query);
+          if (window.filterRanking) {
+            window.filterRanking(query);
+          }
+        }
+      }
+
+      searchBtn.addEventListener('click', handleSearch);
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') handleSearch();
+      });
+
+      window.filterNewBooks = function(keyword, btnElement) {
+        document.querySelectorAll('.new-books-section .cat-btn').forEach(btn => btn.classList.remove('active'));
+        if (btnElement) btnElement.classList.add('active');
+        fetchNewBooks(keyword);
+      };
+
+      window.addEventListener('DOMContentLoaded', () => {
+        fetchNewBooks('신간 도서');
+      });
+    }
+  </script>
+
+  <!-- 4. 출판사 추천 JS -->
+  <script>
+    {
+      const PUBLISHER_JSON_URL = './json/main1.json';
+      const DEFAULT_THUMB = 'https://via.placeholder.com/200x290/f1f3f5/888888?text=No+Cover';
+
+      async function loadPublisherBooks() {
+        const grid = document.getElementById('publisherGrid');
+
+        try {
+          const response = await fetch(PUBLISHER_JSON_URL);
+          if (!response.ok) throw new Error('JSON 로드 실패');
+
+          const books = await response.json();
+          grid.innerHTML = '';
+
+          books.forEach(book => {
+            // [수정] 출판사 추천 도서 클릭 시 sub.html로 이동
+            const card = document.createElement('a');
+            card.href = 'sub.html';
+            card.className = 'publisher-card';
+            card.innerHTML = `
+              <div class="publisher-thumb-box">
+                <img 
+                  src="${book.image}" 
+                  alt="${book.title}" 
+                  loading="lazy" 
+                  onerror="this.onerror=null; this.src='${DEFAULT_THUMB}';"
+                >
+              </div>
+              <div class="publisher-book-title" title="${book.title}">${book.title}</div>
+            `;
+            grid.appendChild(card);
+          });
+        } catch (err) {
+          console.error(err);
+          grid.innerHTML = '<p style="color:#999; grid-column:1/-1; text-align:center; padding:40px 0;">도서 목록을 불러오지 못했습니다.</p>';
+        }
+      }
+
+      window.addEventListener('DOMContentLoaded', loadPublisherBooks);
+    }
+  </script>
+
+  <!-- 5. AI와 함께 읽는 나를 일으킬 책들 JS -->
+  <script>
+    {
+      const KAKAO_REST_API_KEY = '9a318e0b10ce20c64ed53f01aa34e8c1';
+      const track = document.getElementById('aiCardTrack');
+
+      const AI_CURATION_LIST = [
+        {
+          bookTitle: "사람은 생각하는 대로 된다",
+          question: "성공을 위한<br>목표 설정 방법은?",
+          theme: "theme-purple"
+        },
+        {
+          bookTitle: "부의 흐름은 반복된다",
+          question: "경기 흐름을<br>읽는 방법은 무엇인가요?",
+          theme: "theme-pink"
+        },
+        {
+          bookTitle: "페이스 코드",
+          question: "거울 앞에서 자꾸<br>자존감이 떨어진다면?",
+          theme: "theme-blue"
+        },
+        {
+          bookTitle: "역행자",
+          question: "돈과 시간에서 완전한<br>자유를 얻는 7단계는?",
+          theme: "theme-teal"
+        },
+        {
+          bookTitle: "원씽",
+          question: "단 하나에 집중해<br>최고의 성과를 내는 법은?",
+          theme: "theme-indigo"
+        },
+        {
+          bookTitle: "돈의 심리학",
+          question: "부자가 되기 위해<br>가장 먼저 버려야 할 것은?",
+          theme: "theme-amber"
+        },
+        {
+          bookTitle: "세이노의 가르침",
+          question: "피보다 진하게 살아가는<br>인생의 지혜는 무엇일까?",
+          theme: "theme-emerald"
+        },
+        {
+          bookTitle: "도둑맞은 집중력",
+          question: "스마트폰에 빼앗긴<br>집중력을 되찾는 방법은?",
+          theme: "theme-rose"
+        }
+      ];
+
+      async function loadAiCurationSection() {
+        track.innerHTML = '';
+
+        for (const item of AI_CURATION_LIST) {
+          try {
+            const res = await fetch(`https://dapi.kakao.com/v3/search/book?query=${encodeURIComponent(item.bookTitle)}&size=1&sort=accuracy`, {
+              headers: { 'Authorization': `KakaoAK ${KAKAO_REST_API_KEY}` }
+            });
+            
+            if (res.ok) {
+              const data = await res.json();
+              
+              if (data.documents && data.documents.length > 0) {
+                const doc = data.documents[0];
+                
+                if (!doc.thumbnail || doc.thumbnail.trim() === '') continue;
+
+                const thumbUrl = doc.thumbnail;
+                const bookLink = 'sub.html'; // [수정] AI와 함께 읽기 버튼 및 카드 클릭 시 sub.html 이동
+
+                const card = document.createElement('div');
+                card.className = `ai-card ${item.theme}`;
+                card.innerHTML = `
+                  <div class="ai-card-top">
+                    <span class="question-badge"><i class="fa-solid fa-sparkles"></i> 이 책의 질문</span>
+                    <div class="question-text">${item.question}</div>
+                  </div>
+                  <div class="ai-book-thumb">
+                    <img src="${thumbUrl}" alt="${doc.title}" loading="lazy" onerror="this.closest('.ai-card').remove();">
+                  </div>
+                  <a href="${bookLink}" class="btn-ai-read">
+                    <i class="fa-solid fa-robot"></i> AI와 함께 읽기
+                  </a>
+                `;
+                track.appendChild(card);
+              }
+            }
+          } catch (err) {
+            console.error(`도서 로드 에러: ${item.bookTitle}`, err);
+          }
+        }
+      }
+
+      document.getElementById('scrollLeftBtn').addEventListener('click', () => {
+        track.scrollBy({ left: -232 * 2, behavior: 'smooth' });
+      });
+      document.getElementById('scrollRightBtn').addEventListener('click', () => {
+        track.scrollBy({ left: 232 * 2, behavior: 'smooth' });
+      });
+
+      window.addEventListener('DOMContentLoaded', loadAiCurationSection);
+    }
+  </script>
+
+  <!-- 6. 이벤트의 정성이 달라요 JS -->
+  <script>
+    {
+      const EVENTS_JSON_URL = './json/main5.json';
+      const DEFAULT_BANNER = 'https://via.placeholder.com/375x160/f1f3f5/888888?text=Event+Banner';
+
+      const track = document.getElementById('eventSliderTrack');
+      const dotsContainer = document.getElementById('eventSliderDots');
+      const tabKyobo = document.getElementById('tabKyobo');
+      const tabEbook = document.getElementById('tabEbook');
+
+      let currentSlide = 0;
+      const itemsPerPage = 3;
+      let totalPages = 3;
+
+      async function loadEventsData() {
+        try {
+          const res = await fetch(EVENTS_JSON_URL);
+          if (!res.ok) throw new Error('이벤트 JSON 로드 실패');
+          
+          const events = await res.json();
+          renderEventPages(events);
+        } catch (err) {
+          console.error('이벤트 로드 에러:', err);
+        }
+      }
+
+      function renderEventPages(events) {
+        track.innerHTML = '';
+        dotsContainer.innerHTML = '';
+        currentSlide = 0;
+
+        totalPages = Math.ceil(events.length / itemsPerPage);
+
+        for (let i = 0; i < totalPages; i++) {
+          const pageEvents = events.slice(i * itemsPerPage, (i + 1) * itemsPerPage);
+          
+          const pageEl = document.createElement('div');
+          pageEl.className = 'event-slide-page';
+
+          pageEvents.forEach(item => {
+            pageEl.innerHTML += `
+              <a href="sub.html" class="event-banner-card">
+                <img 
+                  src="${item.image}" 
+                  alt="${item.title}" 
+                  loading="lazy" 
+                  onerror="this.onerror=null; this.src='${DEFAULT_BANNER}';"
+                >
+              </a>
+            `;
+          });
+          track.appendChild(pageEl);
+
+          const dot = document.createElement('div');
+          dot.className = `dot ${i === 0 ? 'active' : ''}`;
+          dot.addEventListener('click', () => goToSlide(i));
+          dotsContainer.appendChild(dot);
+        }
+
+        updateSliderPosition();
+      }
+
+      function updateSliderPosition() {
+        track.style.transform = `translateX(-${currentSlide * 100}%)`;
+        
+        const dots = document.querySelectorAll('.slider-dots .dot');
+        dots.forEach((d, idx) => {
+          d.classList.toggle('active', idx === currentSlide);
+        });
+
+        if (currentSlide === 0) {
+          tabKyobo.classList.add('active');
+          tabEbook.classList.remove('active');
+        } else {
+          tabKyobo.classList.remove('active');
+          tabEbook.classList.add('active');
+        }
+      }
+
+      window.goToSlide = function(pageIndex) {
+        currentSlide = pageIndex;
+        updateSliderPosition();
+      };
+
+      document.getElementById('eventPrevBtn').addEventListener('click', () => {
+        currentSlide = (currentSlide - 1 + totalPages) % totalPages;
+        updateSliderPosition();
+      });
+
+      document.getElementById('eventNextBtn').addEventListener('click', () => {
+        currentSlide = (currentSlide + 1) % totalPages;
+        updateSliderPosition();
+      });
+
+      window.addEventListener('DOMContentLoaded', loadEventsData);
+    }
+  </script>
+
+  <!-- 7. 교보문고 푸터 JS -->
+  <script>
+    {
+      const FOOTER_JSON_URL = './json/footer.json';
+
+      async function initFooterData() {
+        try {
+          const res = await fetch(FOOTER_JSON_URL);
+          if (!res.ok) return;
+
+          const data = await res.json();
+
+          const noticeEl = document.getElementById('footerNoticeText');
+          if (noticeEl && data.notice) {
+            noticeEl.innerText = data.notice.title;
+            noticeEl.href = 'sub.html'; // [수정] 공지사항 클릭 시 sub.html 이동
+          }
+
+          const winnerEl = document.getElementById('footerWinnerText');
+          if (winnerEl && data.winner) {
+            winnerEl.innerText = data.winner.title;
+            winnerEl.href = 'sub.html'; // [수정] 당첨자발표 클릭 시 sub.html 이동
+          }
+        } catch (err) {
+          console.log('푸터 기본 텍스트를 사용합니다.');
+        }
+      }
+
+      window.addEventListener('DOMContentLoaded', () => {
+        initFooterData();
+      });
+    }
+  </script>
+</body>
+</html>

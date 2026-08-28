@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "title": "오디세이아(고대 그리스어 완역본)",
+    "image": "img/main/01.jpg",
+    "link": "#"
+  },
+  {
+    "id": 2,
+    "title": "기억의 무늬",
+    "image": "img/main/02.jpg",
+    "link": "#"
+  },
+  {
+    "id": 3,
+    "title": "투명한 나선",
+    "image": "img/main/03.jpg",
+    "link": "#"
+  },
+  {
+    "id": 4,
+    "title": "한국사 그림과 키워드로 요점 정리",
+    "image": "img/main/04.jpg",
+    "link": "#"
+  },
+  {
+    "id": 5,
+    "title": "부자의 영수증",
+    "image": "img/main/05.jpg",
+    "link": "#"
+  },
+  {
+    "id": 6,
+    "title": "인 더 메가처치",
+    "image": "img/main/06.jpg",
+    "link": "#"
+  }
+]

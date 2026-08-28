@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "image": "./img/slider/01.jpg",
+    "alt": "요리 안 하는 요리책",
+    "link": "#"
+  },
+  {
+    "id": 2,
+    "image": "./img/slider/02.jpg",
+    "alt": "독자 에디터 모집",
+    "link": "#"
+  },
+  {
+    "id": 3,
+    "image": "./img/slider/03.jpg",
+    "alt": "스택 리워드",
+    "link": "#"
+  },
+  {
+    "id": 4,
+    "image": "./img/slider/04.jpg",
+    "alt": "리딩플로우 청춘은 고양이",
+    "link": "#"
+  },
+  {
+    "id": 5,
+    "image": "./img/slider/05.jpg",
+    "alt": "나태주 시 세계 결정판",
+    "link": "#"
+  }
+]  

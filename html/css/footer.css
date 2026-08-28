@@ -1,0 +1,81 @@
+@charset "utf-8";
+
+/* =========================================================
+   11. 교보문고 푸터
+   ========================================================= */
+.kyobo-footer {
+  width: 100%; background-color: #ffffff; border-top: 1px solid #eaeaea; color: #666666; font-size: 12px; line-height: 1.6;
+}
+.footer-container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+.footer-notice-bar { border-bottom: 1px solid #f0f0f0; padding: 14px 0; }
+.notice-wrap { display: flex; align-items: center; }
+.notice-item { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+.notice-label { color: #111111; font-size: 13px; white-space: nowrap; display: flex; align-items: center; gap: 4px; }
+.notice-label i { font-size: 9px; color: #888888; }
+.notice-text { color: #555555; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.notice-text:hover { text-decoration: underline; }
+.notice-divider { width: 1px; height: 12px; background-color: #e2e4e7; margin: 0 24px; }
+
+.footer-main-wrap { padding: 36px 0 60px; }
+.footer-content-grid { display: flex; justify-content: space-between; gap: 40px; }
+.footer-left { flex: 1; max-width: 780px; }
+.footer-logo-row { display: flex; align-items: center; gap: 18px; margin-bottom: 22px; }
+.footer-logo { height: 28px; width: auto; }
+.kcsi-logo-img { height: 32px; width: auto; object-fit: contain; border-left: 1px solid #eaeaea; padding-left: 18px; }
+
+.footer-policy-menu { display: flex; flex-wrap: wrap; align-items: center; list-style: none; gap: 16px; margin-bottom: 18px; }
+.footer-policy-menu li a { color: #444444; font-size: 12.5px; }
+.footer-policy-menu li a.point-bold { font-weight: 700; color: #111111; text-decoration: underline; }
+
+.footer-company-info p { color: #767676; font-size: 12px; margin-bottom: 4px; }
+.btn-info-check { display: inline-flex; align-items: center; gap: 2px; border: 1px solid #d4d4d4; border-radius: 3px; padding: 1px 6px; font-size: 11px; color: #555555; margin-left: 4px; }
+.btn-info-check i { font-size: 8px; }
+.copyright { margin-top: 14px; font-weight: 600; color: #444444; }
+
+.footer-right { width: 380px; flex-shrink: 0; }
+.footer-select-row { display: flex; gap: 10px; margin-bottom: 20px; }
+.custom-select-wrap { flex: 1; position: relative; }
+.custom-select-wrap select {
+  width: 100%; height: 38px; border: 1px solid #d4d8dc; border-radius: 6px; padding: 0 12px;
+  font-size: 13px; color: #333333; outline: none; background-color: #ffffff; cursor: pointer; appearance: auto;
+}
+
+.toss-service-box { margin-bottom: 18px; }
+.toss-title-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-size: 12px; color: #444444; font-weight: 500; }
+.btn-toss-check { border: 1px solid #d4d4d4; border-radius: 3px; padding: 1px 6px; font-size: 11px; color: #555555; display: inline-flex; align-items: center; gap: 2px; }
+.btn-toss-check i { font-size: 8px; }
+.toss-desc { font-size: 11.5px; color: #888888; line-height: 1.45; }
+
+.isms-box { display: flex; align-items: center; gap: 12px; border-top: 1px solid #f0f0f0; padding-top: 14px; }
+.isms-logo-wrap { display: flex; align-items: center; gap: 8px; }
+.isms-badge { background-color: #0d47a1; color: #ffffff; font-weight: 800; font-size: 11px; padding: 4px 6px; border-radius: 3px; }
+.isms-name { font-size: 11px; font-weight: 700; color: #333333; line-height: 1.25; }
+.isms-desc { font-size: 11px; color: #888888; line-height: 1.35; }
+
+/* 반응형 미디어쿼리 최적화 */
+@media (max-width: 1200px) { .search-bar-inline { width: 320px; } .scroll-book-list { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 1024px) {
+  .ranking-slide-page { grid-template-columns: repeat(3, 1fr); }
+  .publisher-grid { grid-template-columns: repeat(3, 1fr); gap: 24px 16px; }
+  .life-book-banner-card { padding: 30px; gap: 24px; }
+  .slide-title-main { font-size: 32px; }
+  .slide-item { padding: 0 40px; }
+}
+@media (max-width: 900px) {
+  .sub-nav-row { flex-direction: column; height: auto; padding: 10px 0; gap: 12px; align-items: stretch; }
+  .search-bar-inline { width: 100%; }
+  .new-books-layout { grid-template-columns: 1fr; }
+  .scroll-book-list { grid-template-columns: repeat(3, 1fr); }
+  .life-book-banner-card { flex-direction: column; }
+  .life-book-left-visual { width: 100%; }
+  .life-book-right-review { width: 100%; max-width: 100%; }
+  .event-slide-page { grid-template-columns: 1fr; }
+  .footer-content-grid { flex-direction: column; gap: 30px; }
+  .footer-right { width: 100%; }
+  .notice-wrap { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .notice-divider { display: none; }
+  .slide-single-cover, .slide-double-covers, .cat-visual-card { display: none; }
+  .slide-item { justify-content: center; text-align: center; }
+}
+@media (max-width: 640px) { .ranking-slide-page { grid-template-columns: 1fr; } .scroll-book-list { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .publisher-grid { grid-template-columns: repeat(2, 1fr); } }

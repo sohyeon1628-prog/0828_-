@@ -1,0 +1,2792 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>할매 - 교보문고</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* =========================================================
+       1. 기본 리셋 및 전역 레이아웃
+       ========================================================= */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+      color: #242424;
+      background-color: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      width: 100%;
+      overflow-x: hidden;
+      padding-bottom: 90px; /* 하단 고정 바 공간 확보 */
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    button {
+      background: none;
+      border: none;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* =========================================================
+       2. HEADER & GNB
+       ========================================================= */
+    header {
+      background-color: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .gnb-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+
+    .gnb-left {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
+
+    .brand-logo-slot {
+      display: flex;
+      align-items: center;
+      width: 120px;
+      height: 36px;
+      flex-shrink: 0;
+    }
+    .brand-logo-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .main-nav {
+      display: flex;
+      list-style: none;
+      gap: 26px;
+    }
+
+    .main-nav a {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333333;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.15s ease;
+    }
+
+    .main-nav a:hover,
+    .main-nav a.active {
+      color: #111111;
+      font-weight: 800;
+    }
+
+    .main-nav .badge-dot {
+      width: 4px;
+      height: 4px;
+      background-color: #e5a034;
+      border-radius: 50%;
+      display: inline-block;
+      margin-top: -8px;
+    }
+
+    .gnb-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .icon-btn {
+      color: #242424;
+      font-size: 18px;
+      padding: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.15s ease;
+    }
+    .icon-btn:hover {
+      color: #00873c;
+    }
+
+    .btn-auth-link {
+      font-size: 13px;
+      color: #666666;
+      font-weight: 500;
+    }
+    .btn-auth-link:hover {
+      color: #111111;
+    }
+
+    .btn-login {
+      background-color: #242424;
+      color: #ffffff !important;
+      padding: 7px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+    }
+    .btn-login:hover {
+      background-color: #111111;
+    }
+
+    .sub-nav-wrapper {
+      border-bottom: 1px solid #f0f0f0;
+      background-color: #ffffff;
+    }
+
+    .sub-nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 52px;
+      gap: 30px;
+    }
+
+    .sub-nav {
+      display: flex;
+      list-style: none;
+      gap: 24px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .sub-nav a {
+      font-size: 14.5px;
+      color: #767676;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .sub-nav a.active {
+      color: #111111;
+      font-weight: 800;
+    }
+
+    .sub-nav a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -17px;
+      left: 0;
+      width: 100%;
+      height: 2.5px;
+      background-color: #111111;
+    }
+
+    .search-bar-inline {
+      width: 420px;
+      max-width: 100%;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      border: 1.5px solid #002f6c;
+      border-radius: 24px;
+      padding: 0 16px 0 18px;
+      background-color: #ffffff;
+    }
+
+    .search-bar-inline input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 13.5px;
+      color: #333333;
+      background: transparent;
+    }
+
+    .search-bar-inline .search-btn {
+      color: #002f6c;
+      font-size: 15px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    /* =========================================================
+       3. BREADCRUMBS
+       ========================================================= */
+    .breadcrumb-bar {
+      padding: 18px 0 14px;
+      font-size: 13px;
+      color: #666666;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .breadcrumb-bar a {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .breadcrumb-bar a:hover {
+      text-decoration: underline;
+    }
+    .breadcrumb-bar .sep {
+      color: #cccccc;
+      font-size: 11px;
+    }
+
+    /* =========================================================
+       4. DETAIL TOP SECTION
+       ========================================================= */
+    .detail-top-section {
+      margin-bottom: 40px;
+    }
+
+    .detail-top-card-container {
+      width: 100%;
+      border: 1px solid #e5e7eb;
+      border-radius: 20px;
+      padding: 40px 36px;
+      background-color: #ffffff;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .book-header-title {
+      text-align: center;
+      position: relative;
+      margin-bottom: 24px;
+    }
+    .book-header-title h1 {
+      font-size: 32px;
+      font-weight: 900;
+      color: #111111;
+      letter-spacing: -1px;
+    }
+    .btn-share {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #555555;
+      font-size: 16px;
+      transition: all 0.2s ease;
+    }
+    .btn-share:hover {
+      background-color: #f8f9fa;
+      color: #111111;
+    }
+
+    .book-format-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 36px;
+    }
+    .format-tab-group {
+      display: flex;
+      background-color: #f1f3f5;
+      border-radius: 12px;
+      padding: 4px;
+      gap: 4px;
+    }
+    .format-tab-btn {
+      padding: 10px 32px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .format-tab-btn .fmt-name {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #666666;
+    }
+    .format-tab-btn .fmt-price {
+      font-size: 13px;
+      font-weight: 700;
+      color: #333333;
+    }
+    .format-tab-btn.active {
+      background-color: #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+    .format-tab-btn.active .fmt-name,
+    .format-tab-btn.active .fmt-price {
+      color: #002f6c;
+      font-weight: 700;
+    }
+
+    .detail-top-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr 340px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .detail-left-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .author-pub-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 13.5px;
+      color: #666666;
+    }
+    .author-pub-info .author-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #222222;
+    }
+
+    .best-rank-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #2e7d32;
+    }
+
+    .rating-box {
+      border: 1px solid #edf0f3;
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #fafbfc;
+    }
+    .clover-score {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #00873c;
+      font-size: 16px;
+      font-weight: 800;
+    }
+    .clover-icons {
+      display: flex;
+      gap: 3px;
+      font-size: 13px;
+    }
+    .review-link {
+      font-size: 13px;
+      color: #666666;
+      font-weight: 500;
+    }
+
+    .alert-banner-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: #555555;
+      padding: 8px 0;
+    }
+    .btn-alert-req {
+      border: 1px solid #d4d8dc;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #444444;
+    }
+
+    .trend-banner-btn {
+      width: 100%;
+      background-color: #e3f2fd;
+      color: #1565c0;
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13.5px;
+      font-weight: 700;
+      transition: background-color 0.2s ease;
+    }
+    .trend-banner-btn:hover {
+      background-color: #d1e9fc;
+    }
+
+    .detail-center-visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    .book-cover-large-box {
+      width: 330px;
+      height: 480px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.16);
+      background-color: #f8f9fa;
+      position: relative;
+    }
+    .book-cover-large-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cover-dots-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 18px;
+    }
+    .cover-dots-indicator .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #d8d8d8;
+    }
+    .cover-dots-indicator .dot.active {
+      background-color: #242424;
+    }
+
+    .detail-right-price {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      background-color: #ffffff;
+    }
+
+    .pick-tags-row {
+      display: flex;
+      gap: 6px;
+    }
+    .pick-tag {
+      background-color: #f1f3fe;
+      color: #4a5bf5;
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .price-main-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .discount-rate {
+      font-size: 24px;
+      font-weight: 900;
+      color: #00873c;
+    }
+    .sale-price {
+      font-size: 28px;
+      font-weight: 900;
+      color: #111111;
+    }
+    .origin-price {
+      font-size: 15px;
+      color: #999999;
+      text-decoration: line-through;
+    }
+
+    .price-detail-table {
+      width: 100%;
+      border-top: 1px solid #f0f0f0;
+      padding-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 13px;
+    }
+    .p-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .p-label {
+      color: #666666;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .p-val {
+      color: #222222;
+      text-align: right;
+      font-weight: 600;
+    }
+    .p-val.highlight {
+      color: #00873c;
+    }
+    .p-sub-val {
+      font-size: 11.5px;
+      color: #888888;
+      margin-top: 2px;
+      font-weight: normal;
+    }
+
+    .delivery-arrival {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+    }
+    .delivery-badge {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-right: 4px;
+    }
+
+    .btn-stock-check {
+      width: 100%;
+      height: 44px;
+      border: 1px solid #d4d8dc;
+      border-radius: 8px;
+      background-color: #ffffff;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #333333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 6px;
+      transition: all 0.2s ease;
+    }
+    .btn-stock-check:hover {
+      background-color: #f8f9fa;
+      border-color: #bbbbbb;
+    }
+
+    .delivery-extra-links {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #777777;
+      border-top: 1px solid #f0f0f0;
+      padding-top: 14px;
+    }
+    .delivery-extra-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* =========================================================
+       5. 통계 분포 섹션
+       ========================================================= */
+    .demographics-section {
+      padding: 40px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .demo-section-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #111111;
+      margin-bottom: 20px;
+    }
+
+    .demo-content-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 24px;
+    }
+
+    .demo-chart-box {
+      background-color: #fafbfc;
+      border-radius: 16px;
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .demo-chart-row {
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+      color: #555555;
+    }
+    .demo-num-left {
+      width: 36px;
+      text-align: right;
+      font-weight: 600;
+      padding-right: 10px;
+    }
+    .demo-bar-left-wrap {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+    }
+    .demo-bar-blue {
+      height: 12px;
+      background-color: #60a5fa;
+      border-radius: 6px 0 0 6px;
+    }
+    .demo-age-label {
+      width: 60px;
+      text-align: center;
+      font-weight: 700;
+      color: #444444;
+    }
+    .demo-bar-right-wrap {
+      flex: 1;
+      display: flex;
+      justify-content: flex-start;
+    }
+    .demo-bar-pink {
+      height: 12px;
+      background-color: #f87171;
+      border-radius: 0 6px 6px 0;
+    }
+    .demo-num-right {
+      width: 36px;
+      text-align: left;
+      font-weight: 600;
+      padding-left: 10px;
+    }
+
+    .demo-legend-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      font-size: 12px;
+      color: #777777;
+    }
+    .legend-items {
+      display: flex;
+      gap: 16px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .legend-dot.blue { background-color: #60a5fa; }
+    .legend-dot.pink { background-color: #f87171; }
+
+    .demo-summary-column {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .demo-card-box {
+      background-color: #fafbfc;
+      border-radius: 16px;
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+      flex: 1;
+    }
+    .demo-card-label {
+      font-size: 14px;
+      color: #666666;
+    }
+    .demo-card-main-txt {
+      font-size: 16px;
+      font-weight: 800;
+      color: #111111;
+      line-height: 1.5;
+    }
+    .demo-card-main-txt strong {
+      color: #002f6c;
+    }
+
+    /* =========================================================
+       6. 상세 본문 & 스크롤 탭 & 접이식 섹션
+       ========================================================= */
+    .detail-content-section {
+      padding: 30px 0 40px;
+    }
+
+    .content-sticky-nav {
+      position: sticky;
+      top: 68px;
+      background-color: #ffffff;
+      z-index: 900;
+      border-bottom: 1px solid #e0e0e0;
+      margin-bottom: 36px;
+    }
+    .content-sub-tabs {
+      display: flex;
+      list-style: none;
+    }
+    .c-tab-btn {
+      padding: 16px 22px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #767676;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.15s ease;
+    }
+    .c-tab-btn:hover {
+      color: #222222;
+    }
+    .c-tab-btn.active {
+      color: #111111;
+      font-weight: 800;
+    }
+    .c-tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: #111111;
+    }
+
+    .content-headline {
+      margin-bottom: 32px;
+    }
+    .content-headline h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #111111;
+      line-height: 1.45;
+    }
+
+    .detail-block {
+      margin-bottom: 48px;
+      border-bottom: 1px solid #f0f0f0;
+      padding-bottom: 40px;
+      scroll-margin-top: 130px;
+    }
+    .block-header-flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .block-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #111111;
+    }
+    .block-header-link {
+      font-size: 16px;
+      color: #555555;
+    }
+
+    .collapsible-wrapper {
+      position: relative;
+    }
+    .collapsible-content {
+      max-height: 260px;
+      overflow: hidden;
+      font-size: 14.5px;
+      line-height: 1.9;
+      color: #444444;
+      word-break: keep-all;
+      transition: max-height 0.4s ease;
+    }
+    .collapsible-content.expanded {
+      max-height: none;
+    }
+    .collapsible-content p {
+      margin-bottom: 16px;
+    }
+
+    .collapsible-overlay {
+      position: absolute;
+      bottom: 50px;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .collapsible-content.expanded + .collapsible-overlay {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .btn-toggle-fold {
+      width: 100%;
+      max-width: 320px;
+      height: 44px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      background-color: #ffffff;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #444444;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin: 16px auto 0;
+      transition: all 0.2s ease;
+    }
+    .btn-toggle-fold:hover {
+      background-color: #f8f9fa;
+      border-color: #bbbbbb;
+    }
+
+    /* 북 트레일러 (YouTube 비디오 임베드) */
+    .book-trailer-section {
+      margin-top: 36px;
+      padding-top: 28px;
+      border-top: 1px dashed #e5e7eb;
+    }
+    .trailer-title {
+      font-size: 16.5px;
+      font-weight: 800;
+      color: #111111;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .trailer-title i {
+      color: #e50914;
+    }
+    .trailer-video-box {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      height: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      background-color: #000000;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+    }
+    .trailer-video-box iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .trailer-notice-list {
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 12px;
+      color: #777777;
+      line-height: 1.5;
+    }
+
+    .toc-list {
+      font-size: 14px;
+      color: #555555;
+      line-height: 1.8;
+      padding-left: 4px;
+    }
+
+    .book-spec-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px 32px;
+      background-color: #fafbfc;
+      border-radius: 12px;
+      padding: 20px 24px;
+      font-size: 13.5px;
+    }
+    .spec-item {
+      display: flex;
+      gap: 16px;
+    }
+    .spec-k {
+      width: 90px;
+      color: #767676;
+    }
+    .spec-v {
+      color: #222222;
+      font-weight: 600;
+    }
+
+    /* =========================================================
+       7. 한 줄 리뷰 섹션
+       ========================================================= */
+    .review-summary-card {
+      border: 1px solid #edf0f3;
+      border-radius: 16px;
+      padding: 28px 36px;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      align-items: center;
+      gap: 40px;
+      background-color: #ffffff;
+      margin-bottom: 24px;
+    }
+
+    .review-score-left {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      border-right: 1px solid #f0f0f0;
+      padding-right: 20px;
+    }
+    .review-score-left .stars {
+      color: #ffb800;
+      font-size: 22px;
+      display: flex;
+      gap: 4px;
+    }
+    .review-score-left .score-num {
+      font-size: 40px;
+      font-weight: 900;
+      color: #111111;
+    }
+
+    .review-bars-right {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .rating-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: #666666;
+    }
+    .rating-bar-row .bar-label {
+      width: 24px;
+    }
+    .rating-bar-track {
+      flex: 1;
+      height: 6px;
+      background-color: #f1f3f5;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .rating-bar-fill {
+      height: 100%;
+      background-color: #111111;
+      border-radius: 3px;
+    }
+
+    .rating-prompt-box {
+      border: 1px solid #edf0f3;
+      border-radius: 16px;
+      padding: 28px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+      background-color: #fafbfc;
+    }
+    .rating-prompt-stars {
+      display: flex;
+      gap: 8px;
+      font-size: 24px;
+      color: #d1d5db;
+      cursor: pointer;
+    }
+    .rating-prompt-stars i:hover,
+    .rating-prompt-stars i:hover ~ i {
+      color: #ffb800;
+    }
+    .rating-prompt-txt {
+      font-size: 13.5px;
+      color: #666666;
+    }
+
+    .review-grid-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .user-review-card {
+      border: 1px solid #edf0f3;
+      border-radius: 14px;
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      background-color: #ffffff;
+    }
+    .rev-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .rev-user-profile {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .rev-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #e5e7eb;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #9ca3af;
+    }
+    .rev-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .rev-username {
+      font-size: 13px;
+      font-weight: 700;
+      color: #333333;
+    }
+    .badge-book-master {
+      background-color: #fee2e2;
+      color: #ef4444;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 4px;
+    }
+    .btn-more-dots {
+      color: #9ca3af;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .rev-stars-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11.5px;
+      color: #999999;
+    }
+    .rev-stars-row .stars {
+      color: #ffb800;
+      font-size: 12px;
+    }
+    .rev-comment-text {
+      font-size: 13.5px;
+      color: #333333;
+      line-height: 1.55;
+      word-break: keep-all;
+      min-height: 42px;
+    }
+    .btn-like-pill {
+      align-self: flex-start;
+      border: 1px solid #e5e7eb;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 12px;
+      color: #666666;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+    }
+    .btn-like-pill:hover {
+      background-color: #f9fafb;
+      border-color: #d1d5db;
+    }
+
+    /* =========================================================
+       8. 프로모션 띠배너
+       ========================================================= */
+    .promo-banner-section {
+      margin: 40px 0 60px;
+    }
+    .promo-banner-card {
+      width: 100%;
+      height: 96px;
+      background: linear-gradient(90deg, #2b59c3 0%, #3b82f6 100%);
+      border-radius: 16px;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #ffffff;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .promo-txt-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .promo-main-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+    .promo-sub-title {
+      font-size: 13.5px;
+      opacity: 0.9;
+    }
+    .promo-book-thumb {
+      width: 58px;
+      height: 82px;
+      border-radius: 4px;
+      box-shadow: -2px 4px 12px rgba(0, 0, 0, 0.25);
+      object-fit: cover;
+    }
+
+    /* =========================================================
+       9. 이 책의 포스트 섹션 (4열 카드)
+       ========================================================= */
+    .post-section {
+      margin-bottom: 70px;
+    }
+    .section-title-wrap {
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #111111;
+    }
+
+    .post-grid-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .post-card-item {
+      border: 1px solid #edf0f3;
+      border-radius: 16px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 240px;
+      background-color: #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    }
+    .post-top-info {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .post-card-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #111111;
+    }
+    .post-card-snippet {
+      font-size: 13.5px;
+      color: #555555;
+      line-height: 1.6;
+      height: 86px;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4;
+      line-clamp: 4;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: keep-all;
+    }
+
+    .post-bottom-author {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #f3f4f6;
+      padding-top: 14px;
+    }
+    .post-user-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .post-user-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background-color: #e5e7eb;
+      overflow: hidden;
+    }
+    .post-user-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .post-user-name {
+      font-size: 12.5px;
+      color: #4b5563;
+      font-weight: 600;
+    }
+    .btn-follow {
+      background-color: #242424;
+      color: #ffffff;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* =========================================================
+       10. 소설 분야 BEST (가로 스크롤 도서 리스트)
+       ========================================================= */
+    .best-category-section {
+      margin-bottom: 80px;
+    }
+    .section-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    
+    .scroll-arrow-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-arrow-link {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #e0e0e0;
+      background-color: #ffffff;
+      color: #444444;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .section-arrow-link:hover {
+      background-color: #f8f9fa;
+      color: #111111;
+      border-color: #bbbbbb;
+    }
+
+    .best-books-scroll-wrap {
+      display: flex;
+      gap: 18px;
+      overflow-x: auto;
+      padding-bottom: 16px;
+      scrollbar-width: none;
+      scroll-behavior: smooth;
+    }
+    .best-books-scroll-wrap::-webkit-scrollbar {
+      display: none;
+    }
+
+    .best-book-item {
+      width: 124px;
+      min-width: 124px;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .best-book-thumb-box {
+      width: 100%;
+      height: 176px;
+      border-radius: 6px;
+      overflow: hidden;
+      background-color: #f1f3f5;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      margin-bottom: 8px;
+    }
+    .best-book-thumb-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .best-book-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #222222;
+      line-height: 1.35;
+      height: 36px;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: keep-all;
+      margin-bottom: 3px;
+    }
+    .best-book-item:hover .best-book-title {
+      text-decoration: underline;
+    }
+    .best-book-author {
+      font-size: 11.5px;
+      color: #888888;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    /* =========================================================
+       [신규] 하단 고정 구매 액션 바 (스크롤 따라 고정) 스타일
+       ========================================================= */
+    .fixed-bottom-action-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #ffffff;
+      border-top: 1px solid #e5e7eb;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+      z-index: 9990;
+      padding: 14px 0;
+    }
+    .fixed-bar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .fixed-bar-left {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+    .fixed-bar-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: #555555;
+    }
+    .fixed-bar-price {
+      font-size: 24px;
+      font-weight: 900;
+      color: #111111;
+    }
+    .fixed-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    /* 수량 조절 박스 */
+    .qty-selector-box {
+      display: flex;
+      align-items: center;
+      border: 1px solid #d4d8dc;
+      border-radius: 8px;
+      overflow: hidden;
+      background-color: #ffffff;
+      height: 44px;
+    }
+    .qty-btn {
+      width: 32px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666666;
+      font-size: 12px;
+      cursor: pointer;
+      background-color: #f8f9fa;
+      transition: background-color 0.2s;
+    }
+    .qty-btn:hover {
+      background-color: #e9ecef;
+    }
+    .qty-input {
+      width: 40px;
+      height: 100%;
+      border: none;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: #222222;
+      outline: none;
+    }
+    /* 액션 버튼 그룹 */
+    .action-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-action-ico {
+      width: 44px;
+      height: 44px;
+      border: 1px solid #d4d8dc;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #444444;
+      font-size: 18px;
+      background-color: #ffffff;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-action-ico:hover {
+      background-color: #f8f9fa;
+      border-color: #999;
+    }
+    .btn-action-txt {
+      height: 44px;
+      padding: 0 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-action-txt.gift {
+      border: 1px solid #d4d8dc;
+      background-color: #ffffff;
+      color: #333333;
+    }
+    .btn-action-txt.gift:hover {
+      background-color: #f8f9fa;
+    }
+    .btn-action-txt.cart {
+      border: 1px solid #002f6c;
+      background-color: #ffffff;
+      color: #002f6c;
+    }
+    .btn-action-txt.cart:hover {
+      background-color: #f0f4fa;
+    }
+    .btn-action-txt.baro {
+      border: 1px solid #002f6c;
+      background-color: #ffffff;
+      color: #002f6c;
+    }
+    .btn-action-txt.baro:hover {
+      background-color: #f0f4fa;
+    }
+    .btn-action-txt.order {
+      background-color: #5c6bc0;
+      color: #ffffff;
+      border: none;
+    }
+    .btn-action-txt.order:hover {
+      background-color: #3f51b5;
+    }
+
+    /* =========================================================
+       11. 교보문고 푸터
+       ========================================================= */
+    .kyobo-footer {
+      width: 100%;
+      background-color: #ffffff;
+      border-top: 1px solid #eaeaea;
+      color: #666666;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .footer-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .footer-notice-bar {
+      border-bottom: 1px solid #f0f0f0;
+      padding: 14px 0;
+    }
+    .notice-wrap {
+      display: flex;
+      align-items: center;
+    }
+    .notice-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      min-width: 0;
+    }
+    .notice-label {
+      color: #111111;
+      font-size: 13px;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .notice-label i {
+      font-size: 9px;
+      color: #888888;
+    }
+    .notice-text {
+      color: #555555;
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .notice-divider {
+      width: 1px;
+      height: 12px;
+      background-color: #e2e4e7;
+      margin: 0 24px;
+    }
+
+    .footer-main-wrap {
+      padding: 36px 0 60px;
+    }
+    .footer-content-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .footer-left {
+      flex: 1;
+      max-width: 780px;
+    }
+    
+    .footer-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+    .footer-logo {
+      height: 28px;
+      width: auto;
+    }
+    .kcsi-logo-img {
+      height: 32px;
+      width: auto;
+      object-fit: contain;
+      border-left: 1px solid #eaeaea;
+      padding-left: 18px;
+    }
+
+    .footer-policy-menu {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      list-style: none;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .footer-policy-menu li a {
+      color: #444444;
+      font-size: 12.5px;
+    }
+    .footer-policy-menu li a.point-bold {
+      font-weight: 700;
+      color: #111111;
+      text-decoration: underline;
+    }
+
+    .footer-company-info p {
+      color: #767676;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+    .btn-info-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      border: 1px solid #d4d4d4;
+      border-radius: 3px;
+      padding: 1px 6px;
+      font-size: 11px;
+      color: #555555;
+      margin-left: 4px;
+    }
+    .copyright {
+      margin-top: 14px;
+      font-weight: 600;
+      color: #444444;
+    }
+
+    .footer-right {
+      width: 380px;
+      flex-shrink: 0;
+    }
+
+    .footer-select-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .custom-select-wrap {
+      flex: 1;
+      position: relative;
+    }
+    .custom-select-wrap select {
+      width: 100%;
+      height: 38px;
+      border: 1px solid #d4d8dc;
+      border-radius: 6px;
+      padding: 0 12px;
+      font-size: 13px;
+      color: #333333;
+      outline: none;
+      background-color: #ffffff;
+      cursor: pointer;
+    }
+
+    .toss-service-box {
+      margin-bottom: 18px;
+    }
+    .toss-title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+      font-size: 12px;
+      color: #444444;
+      font-weight: 500;
+    }
+    .btn-toss-check {
+      border: 1px solid #d4d4d4;
+      border-radius: 3px;
+      padding: 1px 6px;
+      font-size: 11px;
+      color: #555555;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .toss-desc {
+      font-size: 11.5px;
+      color: #888888;
+      line-height: 1.45;
+    }
+
+    /* 맨 위로 이동하는 플로팅 스크롤 버튼 스타일 */
+    .scroll-to-top-btn {
+      position: fixed;
+      bottom: 100px; /* 하단 고정 바 위쪽에 위치하도록 수정 */
+      right: 30px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background-color: #242424;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.2s ease;
+    }
+    .scroll-to-top-btn.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    .scroll-to-top-btn:hover {
+      background-color: #002f6c;
+    }
+
+    /* 반응형 대응 */
+    @media (max-width: 1024px) {
+      .detail-top-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .detail-right-price {
+        grid-column: 1 / -1;
+      }
+      .demo-content-grid {
+        grid-template-columns: 1fr;
+      }
+      .post-grid-cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .fixed-bar-right {
+        gap: 6px;
+      }
+      .btn-action-txt {
+        padding: 0 12px;
+        font-size: 13px;
+      }
+    }
+    @media (max-width: 768px) {
+      .detail-top-grid {
+        grid-template-columns: 1fr;
+      }
+      .sub-nav-row {
+        flex-direction: column;
+        height: auto;
+        padding: 10px 0;
+      }
+      .search-bar-inline {
+        width: 100%;
+      }
+      .review-summary-card {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .review-score-left {
+        border-right: none;
+        border-bottom: 1px solid #f0f0f0;
+        padding-bottom: 16px;
+      }
+      .review-grid-cards {
+        grid-template-columns: 1fr;
+      }
+      .post-grid-cards {
+        grid-template-columns: 1fr;
+      }
+      .book-spec-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-content-grid {
+        flex-direction: column;
+      }
+      .content-sub-tabs {
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+      .fixed-bar-left {
+        display: none; /* 모바일에서는 공간 부족으로 우측 버튼 위주로 노출 */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================
+       1. HEADER
+       ========================================================= -->
+  <header>
+    <div class="container">
+      <div class="gnb-top">
+        <div class="gnb-left">
+          <a href="index.html" class="brand-logo-slot">
+            <img src="./img/logo.png" alt="교보문고 로고" onerror="this.style.display='none'">
+          </a>
+          <nav>
+            <ul class="main-nav">
+              <li><a href="index.html">투데이</a></li>
+              <li><a href="#">웹툰웹소<span class="badge-dot"></span></a></li>
+              <li><a href="#" class="active">베스트</a></li>
+              <li><a href="#">이벤트</a></li>
+              <li><a href="#">바로출판</a></li>
+              <li><a href="#">컬처라운지</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="gnb-right">
+          <button class="icon-btn" aria-label="알림"><i class="fa-regular fa-bell"></i></button>
+          <button class="icon-btn" aria-label="장바구니"><i class="fa-solid fa-cart-shopping"></i></button>
+          <button class="icon-btn" aria-label="전체메뉴"><i class="fa-solid fa-bars"></i></button>
+          <a href="#" class="btn-auth-link">회원가입</a>
+          <a href="#" class="btn-login">로그인</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 서브 내비게이션 & 검색바 -->
+  <div class="sub-nav-wrapper">
+    <div class="container">
+      <div class="sub-nav-row">
+        <ul class="sub-nav">
+          <li><a href="#">베스트</a></li>
+          <li><a href="index.html" class="active">NOW</a></li>
+          <li><a href="#">신상품</a></li>
+          <li><a href="#">오디오북</a></li>
+          <li><a href="#">✨ AI발견</a></li>
+          <li><a href="#">PICKS</a></li>
+        </ul>
+
+        <div class="search-bar-inline">
+          <input type="text" placeholder="포기했던 고전 <오디세이>, 비주얼로 단숨에 완독!">
+          <button class="search-btn" aria-label="검색">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 메인 컨테이너 -->
+  <main class="container">
+    
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumb-bar">
+      <a href="index.html"><i class="fa-solid fa-house"></i></a>
+      <span class="sep">&gt;</span>
+      <a href="#">국내도서</a>
+      <span class="sep">&gt;</span>
+      <a href="#">소설</a>
+      <span class="sep">&gt;</span>
+      <a href="#">한국소설</a>
+      <span class="sep">&gt;</span>
+      <a href="#">한국소설일반</a>
+    </nav>
+
+    <!-- =========================================================
+         2. 도서 상단 정보 섹션
+         ========================================================= -->
+    <section class="detail-top-section">
+      <div class="detail-top-card-container">
+        <div class="book-header-title">
+          <h1>할매</h1>
+          <button class="btn-share" title="공유하기"><i class="fa-solid fa-share-nodes"></i></button>
+        </div>
+
+        <!-- 도서 형태 선택 탭 (국내도서 / eBook 연동) -->
+        <div class="book-format-tabs">
+          <div class="format-tab-group">
+            <button class="format-tab-btn active" id="tabDomestic" onclick="changeBookFormat('domestic')">
+              <span class="fmt-name">국내도서</span>
+              <span class="fmt-price">15,120원</span>
+            </button>
+            <button class="format-tab-btn" id="tabEbook" onclick="changeBookFormat('ebook')">
+              <span class="fmt-name">eBook</span>
+              <span class="fmt-price">12,100원</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="detail-top-grid">
+          <!-- [좌측] 도서 메타 정보 -->
+          <div class="detail-left-meta">
+            <div class="author-pub-info">
+              <div class="author-name">황석영 저자(글)</div>
+              <div>창비 · 2025년 12월 12일</div>
+            </div>
+
+            <div class="best-rank-badge">
+              <i class="fa-solid fa-crown"></i> 주간베스트 소설 188위
+            </div>
+
+            <div class="rating-box">
+              <div class="clover-score">
+                <div class="clover-icons">
+                  <i class="fa-solid fa-clover"></i>
+                  <i class="fa-solid fa-clover"></i>
+                  <i class="fa-solid fa-clover"></i>
+                  <i class="fa-solid fa-clover"></i>
+                </div>
+                <span>9.6</span>
+              </div>
+              <a href="#sec-reviews" class="review-link">리뷰 222 &gt;</a>
+            </div>
+
+            <div class="alert-banner-box">
+              <span>신간 소식 가장 먼저 받아보세요.</span>
+              <button class="btn-alert-req">알림신청</button>
+            </div>
+
+            <button class="trend-banner-btn">
+              <span>읽을 책 고를 땐 트렌드+</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <!-- [중앙] 도서 표지 -->
+          <div class="detail-center-visual">
+            <div class="book-cover-large-box">
+              <img src="./img/sub/10.jpg" alt="할매 도서 표지" onerror="this.onerror=null; this.src='https://via.placeholder.com/330x480/dbe7ef/333333?text=할매';">
+            </div>
+            <div class="cover-dots-indicator">
+              <span class="dot active"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+          </div>
+
+          <!-- [우측] 가격 및 배송 정보 (동적 연동 ID 부여) -->
+          <div class="detail-right-price">
+            <div class="pick-tags-row">
+              <span class="pick-tag">2025년 12월 26일 오늘의 선택</span>
+              <span class="pick-tag">MD의 선택</span>
+            </div>
+
+            <div class="price-main-row">
+              <span class="discount-rate" id="rightDiscountRate">10%</span>
+              <span class="sale-price" id="rightSalePrice">15,120원</span>
+              <span class="origin-price" id="rightOriginPrice">16,800원</span>
+            </div>
+
+            <div class="price-detail-table">
+              <div class="p-row">
+                <span class="p-label">통합포인트 <i class="fa-regular fa-circle-question"></i></span>
+                <div class="p-val">
+                  <span id="rightPoint">840P</span> <span class="p-sub-val">(5% 적립)</span>
+                  <div class="p-sub-val">5만원 이상 구매 시 2천원 추가 적립</div>
+                </div>
+              </div>
+
+              <div class="p-row">
+                <span class="p-label">결제혜택</span>
+                <span class="p-val">카드/간편결제 혜택을 확인해 보세요! <i class="fa-solid fa-chevron-down"></i></span>
+              </div>
+
+              <div class="p-row">
+                <span class="p-label">배송비 <i class="fa-regular fa-circle-question"></i></span>
+                <span class="p-val highlight">무료배송</span>
+              </div>
+
+              <div class="p-row">
+                <span class="p-label">배송안내 <i class="fa-regular fa-circle-question"></i></span>
+                <div class="delivery-arrival">
+                  <div><span class="delivery-badge">당일배송</span> <strong>오늘(금) 도착</strong></div>
+                  <div class="p-sub-val"><strong style="color:#00873c;">로그인 후</strong> 정확한 배송안내 받아보세요!</div>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn-stock-check">
+              <i class="fa-solid fa-location-dot"></i> 매장 재고 · 위치
+            </button>
+
+            <div class="delivery-extra-links">
+              <a href="#">해외배송 가능 &gt;</a>
+              <a href="#">문화비소득공제 신청 가능 &gt;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         3. 성별 · 연령별 인기 분포
+         ========================================================= -->
+    <section class="demographics-section">
+      <h2 class="demo-section-title">성별 · 연령별 인기 분포</h2>
+      <div class="demo-content-grid">
+        <div class="demo-chart-box">
+          <div class="demo-chart-row">
+            <span class="demo-num-left">0.7</span>
+            <div class="demo-bar-left-wrap"><div class="demo-bar-blue" style="width: 7%;"></div></div>
+            <span class="demo-age-label">10대</span>
+            <div class="demo-bar-right-wrap"><div class="demo-bar-pink" style="width: 21%;"></div></div>
+            <span class="demo-num-right">2.1</span>
+          </div>
+          <div class="demo-chart-row">
+            <span class="demo-num-left">3.4</span>
+            <div class="demo-bar-left-wrap"><div class="demo-bar-blue" style="width: 34%;"></div></div>
+            <span class="demo-age-label">20대</span>
+            <div class="demo-bar-right-wrap"><div class="demo-bar-pink" style="width: 60%;"></div></div>
+            <span class="demo-num-right">13.4</span>
+          </div>
+          <div class="demo-chart-row">
+            <span class="demo-num-left">7.1</span>
+            <div class="demo-bar-left-wrap"><div class="demo-bar-blue" style="width: 71%;"></div></div>
+            <span class="demo-age-label">30대</span>
+            <div class="demo-bar-right-wrap"><div class="demo-bar-pink" style="width: 100%;"></div></div>
+            <span class="demo-num-right">21.1</span>
+          </div>
+          <div class="demo-chart-row">
+            <span class="demo-num-left">9.7</span>
+            <div class="demo-bar-left-wrap"><div class="demo-bar-blue" style="width: 97%;"></div></div>
+            <span class="demo-age-label">40대</span>
+            <div class="demo-bar-right-wrap"><div class="demo-bar-pink" style="width: 90%;"></div></div>
+            <span class="demo-num-right">19.1</span>
+          </div>
+          <div class="demo-chart-row">
+            <span class="demo-num-left">7.2</span>
+            <div class="demo-bar-left-wrap"><div class="demo-bar-blue" style="width: 72%;"></div></div>
+            <span class="demo-age-label">50대</span>
+            <div class="demo-bar-right-wrap"><div class="demo-bar-pink" style="width: 45%;"></div></div>
+            <span class="demo-num-right">9.6</span>
+          </div>
+          <div class="demo-chart-row">
+            <span class="demo-num-left">2.9</span>
+            <div class="demo-bar-left-wrap"><div class="demo-bar-blue" style="width: 29%;"></div></div>
+            <span class="demo-age-label">60대~</span>
+            <div class="demo-bar-right-wrap"><div class="demo-bar-pink" style="width: 15%;"></div></div>
+            <span class="demo-num-right">3.1</span>
+          </div>
+
+          <div class="demo-legend-row">
+            <div class="legend-items">
+              <div class="legend-item"><span class="legend-dot blue"></span> 남성</div>
+              <div class="legend-item"><span class="legend-dot pink"></span> 여성</div>
+            </div>
+            <span>(단위: %)</span>
+          </div>
+        </div>
+
+        <div class="demo-summary-column">
+          <div class="demo-card-box">
+            <span class="demo-card-label">이 책을 서재에 가장 많이 담은 회원</span>
+            <div class="demo-card-main-txt">
+              <strong>1위</strong> 30대 여성 &nbsp;&nbsp; <strong>2위</strong> 40대 여성
+            </div>
+          </div>
+          <div class="demo-card-box">
+            <div class="demo-card-main-txt">
+              소설 분야는 <strong>20대 여성</strong>이 가장 즐겨 보는데,<br>
+              이 책은 <strong>30대 여성</strong>이 많이 보고 있어요
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         4. 도서 상세 본문 & 스크롤 이동 탭 & 접이식 섹션
+         ========================================================= -->
+    <section class="detail-content-section" id="bookContent">
+      
+      <!-- 스티키 탭 네비게이션 -->
+      <div class="content-sticky-nav">
+        <ul class="content-sub-tabs">
+          <li><button class="c-tab-btn active" onclick="scrollToSection('sec-intro', this)">책 소개</button></li>
+          <li><button class="c-tab-btn" onclick="scrollToSection('sec-toc', this)">목차</button></li>
+          <li><button class="c-tab-btn" onclick="scrollToSection('sec-author', this)">저자 소개</button></li>
+          <li><button class="c-tab-btn" onclick="scrollToSection('sec-publisher', this)">출판사 서평</button></li>
+          <li><button class="c-tab-btn" onclick="scrollToSection('sec-info', this)">책 정보</button></li>
+          <li><button class="c-tab-btn" onclick="scrollToSection('sec-reviews', this)">리뷰 222</button></li>
+        </ul>
+      </div>
+
+      <!-- 헤드라인 카피 -->
+      <div class="content-headline">
+        <h3>황석영만이 쓸 수 있는 격동의 역사<br>모든 사라지는 것들을 위한 이야기</h3>
+      </div>
+
+      <!-- 1. 책 소개 (본문 + 북 트레일러 유튜브 영상) -->
+      <div class="detail-block" id="sec-intro">
+        <h4 class="block-title">책 소개</h4>
+        <div class="collapsible-wrapper">
+          <div class="collapsible-content" id="introContent">
+            <p>
+              한국문학의 가장 높은 산, 만해문학상·대산문학상·에밀 기메 아시아문학상 수상에 빛나는 황석영이 장편소설 『할매』로 돌아왔다. 인터내셔널 부커상 최종후보에 오르며 전세계를 열광시킨 『철도원 삼대』(창비 2020) 이후 5년 만의 신작이다. 저자는 한국 근현대 노동자의 삶을 묵직한 서사로 꿰뚫었던 전작에 이어 이번에는 장구한 역사와 인간 너머의 생명으로 이야기의 지평을 한층 넓혔다. 지구적 생명을 감싸안는 황석영 문학의 새로운 경지라 이를 만하다.
+            </p>
+            <p>
+              이 소설은 한마리 새의 죽음에서 싹터 600년의 세월을 겪어온 팽나무 '할매'를 중심축으로 이 땅의 아픈 역사와 민중의 삶을 장대하게 엮어낸다. 인간과 자연, 삶과 죽음이 별개일 수 없으며 모든 존재가 거대한 인연의 그물망 속에서 순환한다는 웅숭깊은 깨달음을 전하며 기후 위기와 생태 파괴의 시대를 살아가는 우리에게 묵직하고도 아름답게 존재의 근원에 대해 질문한다.
+            </p>
+            <p>
+              또한 황석영 특유의 힘 있는 필치와 압도적인 서사는 읽는 일을 단숨에 시공을 가로질러 생생하게 살아 숨 쉬는 격동의 역사 현장으로 데려다놓는다. 한반도의 비극적 역사뿐만 아니라, 이름 없는 풀벌레의 날갯짓부터 갯벌의 숨소리까지 소설이 포착할 수 있는 세계가 이토록 넓을 수 있음을 확인하게 한다.
+            </p>
+          </div>
+          <div class="collapsible-overlay"></div>
+          <button class="btn-toggle-fold" onclick="toggleCollapsible('introContent', this, '책 소개')">
+            <span>책 소개 펼쳐보기</span> <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+
+        <!-- 북 트레일러 유튜브 영상 영역 -->
+        <div class="book-trailer-section">
+          <h5 class="trailer-title"><i class="fa-brands fa-youtube"></i> 북 트레일러</h5>
+          <div class="trailer-video-box">
+            <iframe 
+              src="https://www.youtube.com/embed/zkaMAG_D_KY" 
+              title="가미카제가 군산에서 키워졌다고? | 아는 만큼 보이는 교양 (황석영 작가 2부)" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="trailer-notice-list">
+            <p>• 출판사의 사정에 따라 서비스가 변경 또는 중지될 수 있습니다.</p>
+            <p>• Windows7의 경우 사운드 연결이 없을 시, 동영상 재생에 오류가 발생할 수 있습니다. 이어폰, 스피커 등이 연결되어 있는지 확인하시고 재생하시기 바랍니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. 목차 -->
+      <div class="detail-block" id="sec-toc">
+        <h4 class="block-title">목차</h4>
+        <div class="toc-list">
+          <p><strong>할매</strong></p>
+          <br>
+          <p>작가의 말</p>
+          <p>감사의 말</p>
+        </div>
+      </div>
+
+      <!-- 3. 저자 소개 -->
+      <div class="detail-block" id="sec-author">
+        <h4 class="block-title">저자 소개</h4>
+        <div class="collapsible-wrapper">
+          <div class="collapsible-content" id="authorContent">
+            <p>
+              1943년 만주 장춘에서 태어나 동국대 철학과를 졸업했다. 고교 재학 중 단편소설 「입석 부근」으로 『사상계』 신인문학상을 수상했고, 단편소설 「탑」이 1970년 조선일보 신춘문예에 당선되면서 본격적인 작품활동을 시작했다.
+            </p>
+            <p>
+              주요 작품으로 『객지』 『가객』 『삼포 가는 길』 『한씨연대기』 『무기의 그늘』 『장길산』 『오래된 정원』 『손님』 『모랫말 아이들』 『심청, 연꽃의 길』 『바리데기』 『개밥바라기별』 『강남몽』 『낯익은 세상』 『여울물 소리』 『해질 무렵』 『철도원 삼대』, 자전 『수인』 등이 있다.
+            </p>
+            <p>
+              1989년 베트남전쟁의 본질을 총체적으로 다룬 『무기의 그늘』로 만해문학상을, 2000년 사회주의의 몰락 이후 변혁을 꿈꾸며 투쟁했던 이들의 삶을 다룬 『오래된 정원』으로 단재상과 이산문학상을 수상했다. 2001년 '황해도 신천 대학살사건'을 모티프로 한 『손님』으로 대산문학상을 받았다. 『손님』 『심청, 연꽃의 길』 『오래된 정원』이 프랑스 페미나상 후보에 올랐으며, 『해질 무렵』으로 프랑스 에밀 기메 아시아 문학상을 수상했다. 2024년 『철도원 삼대』가 인터내셔널 부커상 최종 후보에 올랐다.
+            </p>
+          </div>
+          <div class="collapsible-overlay"></div>
+          <button class="btn-toggle-fold" onclick="toggleCollapsible('authorContent', this, '저자 소개')">
+            <span>저자 소개 펼쳐보기</span> <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 4. 출판사 서평 -->
+      <div class="detail-block" id="sec-publisher">
+        <h4 class="block-title">출판사 서평</h4>
+        <div class="collapsible-wrapper">
+          <div class="collapsible-content" id="pubContent">
+            <p style="font-size: 15.5px; font-weight: 700; color: #111;">
+              맨발의 바닷가 붉은 모래<br>
+              나무의 안에 깃든 파란만장한 인류사
+            </p>
+            <p>
+              소설은 새 한마리의 죽음으로 문을 연다. 사냥마인의 차가운 놋쇠구슬 뚫고 날아든 겨슬도둑새가 팽나무가지의 껍질을 뚫고 들어가며 목숨을 떨어뜨린다. 새의 육신은 흙으로 돌아가지만 그 뱃속에 품고 있던 팽나무 씨앗 하나는 긴 겨울을 견디고 싹을 틔워 마침내 수많은 생명이 깃든 '할매'로 자라난다. 소설은 이 팽나무가 천천히 나이테를 넓히며 겪어내는 그 기나긴 세월을 스쳐간 인간세상의 파란만장한 살림살이를 촘촘히 엮어낸다. 조선 건국 초기, 굶주림에 등을 밀려 들어온 화전민과 전란을 피해 숨어 팽나무 곁에 터를 잡은 이들부터, 일제강점기의 탄압과 징용, 6·25전쟁의 비극과 현대사의 굴곡까지 소설은 팽나무 '할매'의 시선으로 인간사의 빛과 어둠을 빠짐없이 굽어본다. 나무의 침묵 속에서도 살아 숨 쉬는 생명성은 역사의 온갖 굴곡과 아픔을 묵묵히 껴안으며, 이들의 서러운 역사와 연대의 신비한 숨결을 함께 호흡한다.
+            </p>
+            <p>
+              미시사가 근대화로 넘어가면서 서사는 더욱 격정적으로 휘몰아친다. 일제강점기에 수탈을 위해 일본 군인 여럿을 태우고 침몰한 팽나무 곁에는 끔찍한 비극을 목격한다. 자신의 변호사도 없었던 어린 나부와 어로 일구던 청년은 조총사령인 쥐를 피해 도망치다 목이 흔들려 절벽에서 떨어진다. 해방 후에는 고통은 끝나지 않는다. 미군기지의 확장과 사람들의 주권 침탈, 2000년 새만금간척사업이라는 폭력적인 개발은 생명의 터전을 파괴한다. 저자는 갯벌을 뭉개며 거대한 물길을 막아낸 사람들의 횡포와 물길 따라 사라진 조개와 갯벌의 생태계의 파괴를 서술할 뿐만 아니라, 그 속에서 일어난 인간들의 비극을 세심하게 증언한다.
+            </p>
+            <p style="font-size: 15.5px; font-weight: 700; color: #111;">
+              생명공동체이자 우주를 품고 있는 거목,<br>
+              다시 한번 확인하는 한국문학의 영원한 나이테
+            </p>
+            <p>
+              『할매』는 방대한 시간대를 다루지만 각 인물들의 드라마틱한 사연이 톱니바퀴처럼 맞물려 돌아가는 밀도 높은 흡인력으로 독자를 단숨에 600여년의 시간 속으로 빨아들인다. 소설은 역사의 여백을 전시하는 데 그치지 않고 그 안에서 살아 숨 쉬는 모든 생명의 온기와 슬픔의 폭탄까지 세밀하게 복원해내며 우리에게 토양적 상상력과 생태적 사유를 통해 새로운 구원의 가능성을 제시한다. 이 작품은 '하나의 자본 너머의 상처나 끝없는 이야기를 품고 있는 인간을 장엄하게 복원하고 있는 시적 서사의 세계로 뻗어나간다'(백지연 문학평론가). 한국문학의 세계관을 넓혀나가는 거장의 필력을 여실히 체감할 수 있는 소설, 『할매』는 치열하게 지키며 역사와 인간을 증언해온 황석영 문학의 정점이자 기념비적인 걸작이다.
+            </p>
+          </div>
+          <div class="collapsible-overlay"></div>
+          <button class="btn-toggle-fold" onclick="toggleCollapsible('pubContent', this, '출판사 서평')">
+            <span>출판사 서평 펼쳐보기</span> <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 5. 책 정보 -->
+      <div class="detail-block" id="sec-info">
+        <h4 class="block-title">책 정보</h4>
+        <div class="book-spec-grid">
+          <div class="spec-item"><span class="spec-k">카테고리</span><span class="spec-v">소설</span></div>
+          <div class="spec-item"><span class="spec-k">페이지</span><span class="spec-v">234P</span></div>
+          <div class="spec-item"><span class="spec-k">용량</span><span class="spec-v">68.3 MB</span></div>
+          <div class="spec-item"><span class="spec-k">출판사</span><span class="spec-v">창비</span></div>
+          <div class="spec-item"><span class="spec-k">종이책 출간일</span><span class="spec-v">2025.12.12</span></div>
+          <div class="spec-item"><span class="spec-k">전자책 출간일</span><span class="spec-v">2025.12.15</span></div>
+          <div class="spec-item"><span class="spec-k">ISBN/UCI</span><span class="spec-v">9788936439055</span></div>
+        </div>
+      </div>
+
+      <!-- 6. 한 줄 리뷰 222 -->
+      <div class="detail-block" id="sec-reviews">
+        <div class="block-header-flex">
+          <h4 class="block-title">한 줄 리뷰 222</h4>
+          <a href="#" class="block-header-link"><i class="fa-solid fa-chevron-right"></i></a>
+        </div>
+
+        <!-- 평점 요약 & 점수대별 가로 바 -->
+        <div class="review-summary-card">
+          <div class="review-score-left">
+            <div class="stars">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star-half-stroke"></i>
+            </div>
+            <span class="score-num">4.5</span>
+          </div>
+
+          <div class="review-bars-right">
+            <div class="rating-bar-row">
+              <span class="bar-label">5점</span>
+              <div class="rating-bar-track"><div class="rating-bar-fill" style="width: 78%;"></div></div>
+            </div>
+            <div class="rating-bar-row">
+              <span class="bar-label">4점</span>
+              <div class="rating-bar-track"><div class="rating-bar-fill" style="width: 32%;"></div></div>
+            </div>
+            <div class="rating-bar-row">
+              <span class="bar-label">3점</span>
+              <div class="rating-bar-track"><div class="rating-bar-fill" style="width: 6%;"></div></div>
+            </div>
+            <div class="rating-bar-row">
+              <span class="bar-label">2점</span>
+              <div class="rating-bar-track"><div class="rating-bar-fill" style="width: 2%;"></div></div>
+            </div>
+            <div class="rating-bar-row">
+              <span class="bar-label">1점</span>
+              <div class="rating-bar-track"><div class="rating-bar-fill" style="width: 1%;"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 별점 남기기 박스 -->
+        <div class="rating-prompt-box">
+          <div class="rating-prompt-stars">
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+          </div>
+          <p class="rating-prompt-txt">이 책은 어떠셨나요? 별점을 남겨주세요</p>
+        </div>
+
+        <!-- 리뷰 3열 카드 -->
+        <div class="review-grid-cards">
+          <div class="user-review-card">
+            <div>
+              <div class="rev-card-top">
+                <div class="rev-user-profile">
+                  <div class="rev-avatar"><i class="fa-regular fa-user"></i></div>
+                  <span class="rev-username">@아름다운독서</span>
+                </div>
+                <i class="fa-solid fa-ellipsis-vertical btn-more-dots"></i>
+              </div>
+              <div class="rev-stars-row" style="margin: 8px 0 10px;">
+                <div class="stars">
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                </div>
+                <span>2026.08.28</span>
+              </div>
+              <p class="rev-comment-text">마농아, 어디 갔다 인제 왔느냐.</p>
+            </div>
+            <button class="btn-like-pill"><i class="fa-regular fa-heart"></i> 좋아요 11</button>
+          </div>
+
+          <div class="user-review-card">
+            <div>
+              <div class="rev-card-top">
+                <div class="rev-user-profile">
+                  <div class="rev-avatar"><img src="./img/main/img.jpg" alt="프로필" onerror="this.src='https://via.placeholder.com/32/f1f3f5/888888?text=U';"></div>
+                  <span class="rev-username">독서왕김북스 <span class="badge-book-master">북마스터</span></span>
+                </div>
+                <i class="fa-solid fa-ellipsis-vertical btn-more-dots"></i>
+              </div>
+              <div class="rev-stars-row" style="margin: 8px 0 10px;">
+                <div class="stars">
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                </div>
+                <span>2026.08.27</span>
+              </div>
+              <p class="rev-comment-text">글을 읽었는데, 팽나무를 중심으로 600년의 대장편소설을 본 듯하다.</p>
+            </div>
+            <button class="btn-like-pill"><i class="fa-regular fa-heart"></i> 좋아요 9</button>
+          </div>
+
+          <div class="user-review-card">
+            <div>
+              <div class="rev-card-top">
+                <div class="rev-user-profile">
+                  <div class="rev-avatar"><i class="fa-solid fa-user-astronaut"></i></div>
+                  <span class="rev-username">푸울</span>
+                </div>
+                <i class="fa-solid fa-ellipsis-vertical btn-more-dots"></i>
+              </div>
+              <div class="rev-stars-row" style="margin: 8px 0 10px;">
+                <div class="stars">
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                </div>
+                <span>2026.08.15</span>
+              </div>
+              <p class="rev-comment-text">믿고 보는 황석영 작가님의 필력, 울컥하고 묵직한 여운이 남네요 ㅠㅠ</p>
+            </div>
+            <button class="btn-like-pill"><i class="fa-regular fa-heart"></i> 좋아요 6</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- =========================================================
+         5. 히가시노 게이고 프로모션 띠배너
+         ========================================================= -->
+    <section class="promo-banner-section">
+      <div class="promo-banner-card">
+        <div class="promo-txt-wrap">
+          <h3 class="promo-main-title">히가시노 게이고 &lt;투명한 나선&gt;</h3>
+          <p class="promo-sub-title">갈릴레오 시리즈의 새로운 전환점</p>
+        </div>
+        <img class="promo-book-thumb" src="./img/sub/01.png" alt="투명한 나선" onerror="this.onerror=null; this.src='https://via.placeholder.com/58x82/3b82f6/ffffff?text=Book';">
+      </div>
+    </section>
+
+    <!-- =========================================================
+         6. 이 책의 포스트 (4열 카드)
+         ========================================================= -->
+    <section class="post-section">
+      <div class="section-title-wrap">
+        <h2 class="section-title">이 책의 포스트</h2>
+      </div>
+
+      <div class="post-grid-cards">
+        <div class="post-card-item">
+          <div class="post-top-info">
+            <h3 class="post-card-title">말이</h3>
+            <p class="post-card-snippet">
+              황석영 작가님의 신작 소설 '할매'는 팽나무의 시선으로 그려낸 현대사의 아픔이다. 역사적 사건 뒤에 숨겨진 민초들의 삶을 되돌아보게 만든다. 문장 하나하나에 깊은 울림이 있다.
+            </p>
+          </div>
+          <div class="post-bottom-author">
+            <div class="post-user-meta">
+              <div class="post-user-avatar"><i class="fa-regular fa-user"></i></div>
+              <span class="post-user-name">아름다운독서</span>
+            </div>
+            <button class="btn-follow">팔로우</button>
+          </div>
+        </div>
+
+        <div class="post-card-item">
+          <div class="post-top-info">
+            <h3 class="post-card-title">나귀</h3>
+            <p class="post-card-snippet">
+              다시 한 번 정독을 해야 겠다. 생명과 순환의 거대한 세계관이 너무나 아름답게 펼쳐진다.
+            </p>
+          </div>
+          <div class="post-bottom-author">
+            <div class="post-user-meta">
+              <div class="post-user-avatar"><img src="./img/main/img.jpg" alt="" onerror="this.src='https://via.placeholder.com/28/f1f3f5/888888?text=U';"></div>
+              <span class="post-user-name">shl0528p</span>
+            </div>
+            <button class="btn-follow">팔로우</button>
+          </div>
+        </div>
+
+        <div class="post-card-item">
+          <div class="post-top-info">
+            <h3 class="post-card-title">독서왕</h3>
+            <p class="post-card-snippet">
+              600년전 개똥지빠귀로 부터 시작된 팽나무의 한이 고스란히 느껴졌다. 황석영 작가만이 가능한 독보적 서사.
+            </p>
+          </div>
+          <div class="post-bottom-author">
+            <div class="post-user-meta">
+              <div class="post-user-avatar"><i class="fa-solid fa-cat"></i></div>
+              <span class="post-user-name">여유로운 도깨비</span>
+            </div>
+            <button class="btn-follow">팔로우</button>
+          </div>
+        </div>
+
+        <div class="post-card-item">
+          <div class="post-top-info">
+            <h3 class="post-card-title">책췍췍</h3>
+            <p class="post-card-snippet">
+              600년 넘는 세월을 견딘 팽나무를 중심에 두고 굵직한 역사의 흐름과 그 속의 수많은 사람들의 삶을 이야기로 풀어낸 묵직한 대작 소설이다.
+            </p>
+          </div>
+          <div class="post-bottom-author">
+            <div class="post-user-meta">
+              <div class="post-user-avatar"><i class="fa-regular fa-circle-user"></i></div>
+              <span class="post-user-name">네프티스</span>
+            </div>
+            <button class="btn-follow">팔로우</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         7. 소설 분야 BEST (가로 스크롤 도서 리스트)
+         ========================================================= -->
+    <section class="best-category-section">
+      <div class="section-header-row">
+        <h2 class="section-title">소설 분야 BEST</h2>
+        <div class="scroll-arrow-group">
+          <button class="section-arrow-link" id="bestScrollLeftBtn" aria-label="이전 도서 보기" title="이전"><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="section-arrow-link" id="bestScrollRightBtn" aria-label="다음 도서 보기" title="다음"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+
+      <div class="best-books-scroll-wrap" id="bestBooksTrack">
+        <div class="best-book-item">
+          <div class="best-book-thumb-box">
+            <img src="img/sub/01.png" alt="투명한 나선" onerror="this.onerror=null; this.src='https://via.placeholder.com/124x176/f1f3f5/888888?text=Book';">
+          </div>
+          <div class="best-book-title">투명한 나선</div>
+          <div class="best-book-author">히가시노 게이고 지음</div>
+        </div>
+
+        <div class="best-book-item">
+          <div class="best-book-thumb-box">
+            <img src="./img/sub/02.png" alt="데오" onerror="this.onerror=null; this.src='https://via.placeholder.com/124x176/f1f3f5/888888?text=Book';">
+          </div>
+          <div class="best-book-title">데오</div>
+          <div class="best-book-author">엘런 세페 지음 / 노진</div>
+        </div>
+
+        <div class="best-book-item">
+          <div class="best-book-thumb-box">
+            <img src="./img/sub/03.png" alt="세입자" onerror="this.onerror=null; this.src='https://via.placeholder.com/124x176/f1f3f5/888888?text=Book';">
+          </div>
+          <div class="best-book-title">세입자</div>
+          <div class="best-book-author">프레크 베버든 지음</div>
+        </div>
+
+        <div class="best-book-item">
+          <div class="best-book-thumb-box">
+            <img src="./img/sub/04.png" alt="용의자 X의 헌신" onerror="this.onerror=null; this.src='https://via.placeholder.com/124x176/f1f3f5/888888?text=Book';">
+          </div>
+          <div class="best-book-title">용의자 X의 헌신</div>
+          <div class="best-book-author">히가시노 게이고 지음</div>
+        </div>
+
+        <div class="best-book-item">
+          <div class="best-book-thumb-box">
+            <img src="./img/sub/05.png" alt="싯다르타" onerror="this.onerror=null; this.src='https://via.placeholder.com/124x176/f1f3f5/888888?text=Book';">
+          </div>
+          <div class="best-book-title">싯다르타</div>
+          <div class="best-book-author">헤르만 헤세 지음</div>
+        </div>
+
+        <div class="best-book-item">
+          <div class="best-book-thumb-box">
+            <img src="./img/sub/06.png" alt="나미야 잡화점의 기적" onerror="this.onerror=null; this.src='https://via.placeholder.com/124x176/f1f3f5/888888?text=Book';">
+          </div>
+          <div class="best-book-title">나미야 잡화점의 기적</div>
+          <div class="best-book-author">히가시노 게이고 지음</div>
+        </div>
+
+        <div class="best-book-item">
+          <div class="best-book-thumb-box">
+            <img src="./img/sub/07.png" alt="만녕이라 그랬어" onerror="this.onerror=null; this.src='https://via.placeholder.com/124x176/f1f3f5/888888?text=Book';">
+          </div>
+          <div class="best-book-title">만녕이라 그랬어</div>
+          <div class="best-book-author">김애란</div>
+        </div>
+
+        <div class="best-book-item">
+          <div class="best-book-thumb-box">
+            <img src="./img/sub/08.jpg" alt="혼모노" onerror="this.onerror=null; this.src='https://via.placeholder.com/124x176/f1f3f5/888888?text=Book';">
+          </div>
+          <div class="best-book-title">혼모노</div>
+          <div class="best-book-author">성해나</div>
+        </div>
+
+        <div class="best-book-item">
+          <div class="best-book-thumb-box">
+            <img src="./img/sub/09.png" alt="당신이 누군가를 죽였다" onerror="this.onerror=null; this.src='https://via.placeholder.com/124x176/f1f3f5/888888?text=Book';">
+          </div>
+          <div class="best-book-title">당신이 누군가를 죽였다</div>
+          <div class="best-book-author">히가시노 게이고 지음</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================
+       11. 교보문고 푸터
+       ========================================================= -->
+  <footer class="kyobo-footer">
+    <div class="footer-notice-bar">
+      <div class="footer-container notice-wrap">
+        <div class="notice-item">
+          <a href="#" class="notice-label"><strong>공지사항</strong> <i class="fa-solid fa-chevron-right"></i></a>
+          <a href="#" class="notice-text">회원등급 산정 순수구매액 '교보e캐시' 적용 기준 변경 안내</a>
+        </div>
+        <div class="notice-divider"></div>
+        <div class="notice-item">
+          <a href="#" class="notice-label"><strong>당첨자발표</strong> <i class="fa-solid fa-chevron-right"></i></a>
+          <a href="#" class="notice-text">[sam] 제21회 책강 김헌 &lt;오뒷세이아&gt; 강연 당첨자 발표 안내</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-main-wrap">
+      <div class="footer-container footer-content-grid">
+        <div class="footer-left">
+          <div class="footer-logo-row">
+            <img src="img/logo.png" alt="교보문고" class="footer-logo">
+            <img src="./img/footer/01.png" alt="2025년 한국산업의 고객만족도 온라인서점 부문 1위 KMAC 선정 KCSI" class="kcsi-logo-img" onerror="this.onerror=null; this.src='https://image.kyobobook.co.kr/ink/images/common/footer/img_kcsi.png';">
+          </div>
+
+          <ul class="footer-policy-menu">
+            <li><a href="#">회사소개</a></li>
+            <li><a href="#">이용약관</a></li>
+            <li><a href="#" class="point-bold">개인정보처리방침</a></li>
+            <li><a href="#">청소년보호정책</a></li>
+            <li><a href="#">대량구매서비스</a></li>
+            <li><a href="#">협력사여러분</a></li>
+            <li><a href="#">채용정보</a></li>
+            <li><a href="#">광고소개</a></li>
+          </ul>
+
+          <div class="footer-company-info">
+            <p>
+              (주)교보문고 &nbsp;|&nbsp; 서울특별시 종로구 종로1 &nbsp;|&nbsp; 대표이사 : 허정도 &nbsp;|&nbsp; 사업자등록번호 : 102-81-11670 
+              <a href="#" class="btn-info-check">사업자정보확인 <i class="fa-solid fa-chevron-right"></i></a>
+            </p>
+            <p>
+              대표전화(발신자부담) : 1544-1900(교보문고) &nbsp;·&nbsp; 1661-1112(핫트랙스) &nbsp;|&nbsp; FAX : 0502-987-5711(지역번호 공통)
+            </p>
+            <p>서울특별시 통신판매업신고번호 : 제 653호</p>
+            <p class="copyright">© KYOBO BOOK CENTRE</p>
+          </div>
+        </div>
+
+        <div class="footer-right">
+          <div class="footer-select-row">
+            <div class="custom-select-wrap">
+              <select onchange="if(this.value) window.open(this.value, '_blank')">
+                <option value="">Family Site</option>
+                <option value="https://www.kyobo.com">교보생명</option>
+                <option value="https://www.iprovest.com">교보증권</option>
+                <option value="https://www.lifeplanet.co.kr">교보라이프플래닛</option>
+              </select>
+            </div>
+            <div class="custom-select-wrap">
+              <select onchange="if(this.value) window.open(this.value, '_blank')">
+                <option value="">SNS 바로가기</option>
+                <option value="https://youtube.com">유튜브</option>
+                <option value="https://instagram.com">인스타그램</option>
+                <option value="https://facebook.com">페이스북</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="toss-service-box">
+            <div class="toss-title-row">
+              <span>토스페이먼츠 구매안전서비스</span>
+              <a href="#" class="btn-toss-check">서비스가입확인 <i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+            <p class="toss-desc">
+              고객님은 안전거래를 위해 현금 등으로 결제시 저희 쇼핑몰에서 가입한 토스페이먼츠의 구매안전서비스를 이용하실 수 있습니다.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================
+       [신규] 하단 고정 구매 액션 바 (스크롤 시 항상 하단 고정)
+       ========================================================= -->
+  <div class="fixed-bottom-action-bar">
+    <div class="container fixed-bar-inner">
+      <div class="fixed-bar-left">
+        <span class="fixed-bar-label">총 상품금액</span>
+        <span class="fixed-bar-price" id="fixedBarPrice">15,120원</span>
+      </div>
+      <div class="fixed-bar-right">
+        <!-- 수량 조절 버튼 -->
+        <div class="qty-selector-box">
+          <button class="qty-btn" onclick="adjustQty(-1)"><i class="fa-solid fa-minus"></i></button>
+          <input type="text" id="qtyInput" class="qty-input" value="1" readonly>
+          <button class="qty-btn" onclick="adjustQty(1)"><i class="fa-solid fa-plus"></i></button>
+        </div>
+        <!-- 액션 버튼들 -->
+        <div class="action-btn-group">
+          <button class="btn-action-ico" title="찜하기"><i class="fa-regular fa-heart"></i></button>
+          <button class="btn-action-txt gift">선물하기</button>
+          <button class="btn-action-txt cart">장바구니</button>
+          <button class="btn-action-txt baro">바로드림</button>
+          <button class="btn-action-txt order">주문하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 맨 위로 이동하는 플로팅 스크롤 버튼 HTML -->
+  <button class="scroll-to-top-btn" id="scrollToTopBtn" aria-label="맨 위로 이동">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+  <!-- =========================================================
+       JavaScript 영역
+       ========================================================= -->
+  <script>
+    // 도서 데이터 객체 (국내도서 vs eBook 가격 동적 연동용)
+    const bookData = {
+      domestic: {
+        discount: "10%",
+        salePrice: "15,120원",
+        originPrice: "16,800원",
+        point: "840P",
+        numericPrice: 15120
+      },
+      ebook: {
+        discount: "10%",
+        salePrice: "12,100원",
+        originPrice: "13,440원",
+        point: "670P",
+        numericPrice: 12100
+      }
+    };
+
+    let currentFormat = 'domestic';
+    let currentQty = 1;
+
+    // 1. 도서 포맷 선택 (국내도서 / eBook 탭 전환 및 우측/하단 가격 연동)
+    function changeBookFormat(format) {
+      currentFormat = format;
+      
+      // 탭 활성화 클래스 토글
+      document.getElementById('tabDomestic').classList.toggle('active', format === 'domestic');
+      document.getElementById('tabEbook').classList.toggle('active', format === 'ebook');
+
+      // 데이터 가져오기
+      const data = bookData[format];
+
+      // 우측 상단 가격 영역 업데이트
+      document.getElementById('rightDiscountRate').innerText = data.discount;
+      document.getElementById('rightSalePrice').innerText = data.salePrice;
+      document.getElementById('rightOriginPrice').innerText = data.originPrice;
+      document.getElementById('rightPoint').innerText = data.point;
+
+      // 하단 고정바 총 상품금액 업데이트
+      updateTotalPrice();
+    }
+
+    // 기존 호환용 switchFormat 함수
+    function switchFormat(btn) {
+      if (btn.id === 'tabEbook') {
+        changeBookFormat('ebook');
+      } else {
+        changeBookFormat('domestic');
+      }
+    }
+
+    // 수량 조절 함수
+    function adjustQty(amount) {
+      currentQty += amount;
+      if (currentQty < 1) currentQty = 1;
+      if (currentQty > 99) currentQty = 99;
+      
+      document.getElementById('qtyInput').value = currentQty;
+      updateTotalPrice();
+    }
+
+    // 총 상품금액 계산 및 하단 바 반영
+    function updateTotalPrice() {
+      const unitPrice = bookData[currentFormat].numericPrice;
+      const total = unitPrice * currentQty;
+      document.getElementById('fixedBarPrice').innerText = total.toLocaleString() + '원';
+    }
+
+    // 2. 탭 클릭 시 해당 섹션으로 스무스 스크롤 이동
+    function scrollToSection(sectionId, btn) {
+      const target = document.getElementById(sectionId);
+      if (!target) return;
+
+      document.querySelectorAll('.c-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // 3. 접었다 폈다 제어 (더보기 / 접어보기)
+    function toggleCollapsible(contentId, btn, title) {
+      const content = document.getElementById(contentId);
+      const isExpanded = content.classList.contains('expanded');
+
+      if (isExpanded) {
+        content.classList.remove('expanded');
+        btn.innerHTML = `<span>${title} 펼쳐보기</span> <i class="fa-solid fa-chevron-down"></i>`;
+      } else {
+        content.classList.add('expanded');
+        btn.innerHTML = `<span>${title} 접어보기</span> <i class="fa-solid fa-chevron-up"></i>`;
+      }
+    }
+
+    // 4. 소설 분야 BEST 가로 스크롤 좌우 버튼 제어
+    const bestScrollLeftBtn = document.getElementById('bestScrollLeftBtn');
+    const bestScrollRightBtn = document.getElementById('bestScrollRightBtn');
+    const bestBooksTrack = document.getElementById('bestBooksTrack');
+
+    if (bestScrollLeftBtn && bestBooksTrack) {
+      bestScrollLeftBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        bestBooksTrack.scrollBy({ left: -300, behavior: 'smooth' });
+      });
+    }
+
+    if (bestScrollRightBtn && bestBooksTrack) {
+      bestScrollRightBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        bestBooksTrack.scrollBy({ left: 300, behavior: 'smooth' });
+      });
+    }
+
+    // 5. 맨 위로 스크롤 버튼 제어
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        scrollToTopBtn.classList.add('show');
+      } else {
+        scrollToTopBtn.classList.remove('show');
+      }
+    });
+
+    scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // 6. 스크롤 위치에 따른 상단 탭 활성화 상태 자동 동기화
+    window.addEventListener('scroll', () => {
+      const sections = ['sec-intro', 'sec-toc', 'sec-author', 'sec-publisher', 'sec-info', 'sec-reviews'];
+      const tabs = document.querySelectorAll('.c-tab-btn');
+      
+      let currentSectionId = '';
+      const scrollPos = window.scrollY + 160;
+
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= scrollPos) {
+          currentSectionId = id;
+        }
+      });
+
+      if (currentSectionId) {
+        tabs.forEach(tab => {
+          const onclickAttr = tab.getAttribute('onclick') || '';
+          if (onclickAttr.includes(currentSectionId)) {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+          }
+        });
+      }
+    });
+    
+  </script>
+</body>
+</html>

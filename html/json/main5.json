@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "title": "나만의 교보문고 에디션 이벤트",
+    "image": "./img/event/1.png",
+    "link": "#"
+  },
+  {
+    "id": 2,
+    "title": "Are You READY? 실내파vs실외파",
+    "image": "./img/event/2.jpg",
+    "link": "#"
+  },
+  {
+    "id": 3,
+    "title": "배송비 대신 책 한 권!",
+    "image": "./img/event/3.jpg",
+    "link": "#"
+  },
+  {
+    "id": 4,
+    "title": "교보eBook 2학기 대학교재전",
+    "image": "./img/event/4.jpg",
+    "link": "#"
+  },
+  {
+    "id": 5,
+    "title": "It's a Happy Goethe Day!",
+    "image": "./img/event/5.jpg",
+    "link": "#"
+  },
+  {
+    "id": 6,
+    "title": "8월 eBook 특별 할인 열린책들 브랜드전",
+    "image": "./img/event/6.png",
+    "link": "#"
+  },
+  {
+    "id": 7,
+    "title": "더위를 날려버릴 교보괴담회 시즌4",
+    "image": "./img/event/7.jpg",
+    "link": "#"
+  },
+  {
+    "id": 8,
+    "title": "어크로스 브랜드전",
+    "image": "./img/event/8.jpg",
+    "link": "#"
+  },
+  {
+    "id": 9,
+    "title": "eBook 리더기 이달의 비밀 선물",
+    "image": "./img/event/9.jpg",
+    "link": "#"
+  }
+]
